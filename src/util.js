@@ -11,22 +11,34 @@ export const matrixDeepCopy = (matrixValues) => {
   return matrixCopy;
 };
 
-// export const useBoundingClientRect = (ref) => {
-//   const [x, setX] = useState(0);
-//   const [y, setY] = useState(0);
-//   const [width, setWidth] = useState(0);
-//   const [height, setHeight] = useState(0);
+export const useBoundingClientRect = (ref) => {
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-//   useEffect(() => {
-//     const rect = ref.current.getBoundingClientRect();
-//     setX(rect.x);
-//     setY(rect.y);
-//     setWidth(rect.width);
-//     setHeight(rect.height);
-//   }, [ref]);
+  const handleWindowChange = useCallback(() => {
+    const rect = ref.current.getBoundingClientRect();
+    setX(rect.x);
+    setY(rect.y);
+    setWidth(rect.width);
+    setHeight(rect.height);
+  }, [ref]);
 
-//   return { x, y, width, height };
-// };
+  useEffect(() => {
+    handleWindowChange();
+    // WIP. Use ResizeObserver instead.
+    window.addEventListener("resize", handleWindowChange);
+    window.addEventListener("scroll", handleWindowChange);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowChange);
+      window.removeEventListener("scroll", handleWindowChange);
+    };
+  }, [handleWindowChange]);
+
+  return { x, y, width, height };
+};
 
 export const useViewControls = () => {
   const [zoom, setZoom] = useState(1);
