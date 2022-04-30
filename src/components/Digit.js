@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 
 const Digit = ({
@@ -12,27 +12,24 @@ const Digit = ({
 }) => {
   const rootElRef = useRef(null);
 
-  const handleMouseMove = useCallback(
-    ({ pageX, pageY }) => {
-      const {
-        x: digitX,
-        y: digitY,
-        width: digitWidth,
-        height: digitHeight,
-      } = rootElRef.current.getBoundingClientRect();
-      const pointer = {
-        x: Math.round(pageX - digitX + 1), // +1 is a hack. Not sure why pageX is off by 1.
-        y: Math.round(pageY - digitY + 1), // +1 is a hack. Not sure why pageX is off by 1.
-      };
-      onHoverProgress({
-        column,
-        row,
-        progressX: pointer.x / digitWidth,
-        progressY: pointer.y / digitHeight,
-      });
-    },
-    [onHoverProgress, column, row]
-  );
+  const handleMouseMove = ({ pageX, pageY }) => {
+    const {
+      x: digitX,
+      y: digitY,
+      width: digitWidth,
+      height: digitHeight,
+    } = rootElRef.current.getBoundingClientRect();
+    const pointer = {
+      x: Math.round(pageX - digitX + 1), // +1 is a hack. Not sure why pageX is off by 1.
+      y: Math.round(pageY - digitY + 1), // +1 is a hack. Not sure why pageX is off by 1.
+    };
+    onHoverProgress({
+      column,
+      row,
+      progressX: pointer.x / digitWidth,
+      progressY: pointer.y / digitHeight,
+    });
+  };
 
   return (
     <motion.div
