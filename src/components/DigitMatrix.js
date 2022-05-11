@@ -13,97 +13,42 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   const [zoomPortWidth, zoomPortHeight] = useSize(zoomPortElRef);
   const [matrixWidth, matrixHeight] = useSize(matrixElRef);
 
-  const handleHoverProgress = ({ column, row, progressX, progressY }) => {
+  const handleHoverProgress = ({
+    column,
+    row,
+    progressX,
+    progressY,
+    progressDiagonal,
+  }) => {
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
 
-    // Enlarge top left.
-    if (row > 0 && column > 0) {
-      // matrixValuesCopy[row - 1][column - 1].enlargement = 0.5;
-    }
-
-    // Enlarge top.
-    if (row > 0) {
-      matrixValuesCopy[row - 1][column].enlargement = mapping({
-        sourceValue: progressY,
-        sourceRange: [0, 0.5],
-        mappedRange: [1, 0],
-      });
-    }
-
-    // Enlarge top right.
-    if (row > 0 && column < squareRoot - 1) {
-      // matrixValuesCopy[row - 1][column + 1].enlargement = 0.5;
-    }
-
-    // Enlarge left.
-    if (column > 0) {
-      matrixValuesCopy[row][column - 1].enlargement = mapping({
-        sourceValue: progressX,
-        sourceRange: [0, 0.5],
-        mappedRange: [1, 0],
-      });
-    }
-
-    // Enlarge center.
     matrixValuesCopy[row][column].enlargement = 1;
 
-    // Enlarge right.
-    if (column < squareRoot - 1) {
-      matrixValuesCopy[row][column + 1].enlargement = mapping({
-        sourceValue: progressX,
-        sourceRange: [0.5, 1],
-        mappedRange: [0, 1],
-      });
+    if (progressX < 0 && column > 0) {
+      matrixValuesCopy[row][column - 1].enlargement = Math.abs(progressX);
+    } else if (progressX >= 0 && column < squareRoot - 1) {
+      matrixValuesCopy[row][column + 1].enlargement = progressX;
     }
 
-    // Enlarge bottom left.
-    if (row < squareRoot - 1 && column > 0) {
-      // matrixValuesCopy[row + 1][column - 1].enlargement = 0.5;
+    if (progressY < 0 && row > 0) {
+      matrixValuesCopy[row - 1][column].enlargement = Math.abs(progressY);
+    } else if (progressY >= 0 && row < squareRoot - 1) {
+      matrixValuesCopy[row + 1][column].enlargement = progressY;
     }
 
-    // // Enlarge bottom.
-    // if (row < squareRoot - 1) {
-    //   matrixValuesCopy[row + 1][column].enlargement = mapping({
-    //     sourceValue: progressX,
-    //     sourceRange: [0.5, 1],
-    //     mappedRange: [0, 1],
-    //   });
-    // }
+    console.log(progressDiagonal);
 
-    // Enlarge bottom right.
-    if (row < squareRoot - 1 && column < squareRoot - 1) {
-      // matrixValuesCopy[row + 1][column + 1].enlargement = 0.5;
+    if (progressX < 0 && progressY < 0) {
+      matrixValuesCopy[row - 1][column - 1].enlargement = progressDiagonal;
+    } else if (progressX > 0 && progressY < 0) {
+      matrixValuesCopy[row - 1][column + 1].enlargement = progressDiagonal;
+    } else if (progressX > 0 && progressY > 0) {
+      matrixValuesCopy[row + 1][column + 1].enlargement = progressDiagonal;
+    } else if (progressX < 0 && progressY > 0) {
+      matrixValuesCopy[row + 1][column - 1].enlargement = progressDiagonal;
     }
 
     setMatrixValues(matrixValuesCopy);
-
-    // console.log({
-    //   topLeft:
-    //     row > 0 && column > 0
-    //       ? matrixValuesCopy[row - 1][column - 1].value
-    //       : null,
-    //   top: row > 0 ? matrixValuesCopy[row - 1][column].value : null,
-    //   topRight:
-    //     row > 0 && column < squareRoot - 1
-    //       ? matrixValuesCopy[row - 1][column + 1].value
-    //       : null,
-    //   left: column > 0 ? matrixValuesCopy[row][column - 1].value : null,
-    //   center: matrixValuesCopy[row][column].value,
-    //   right:
-    //     column < squareRoot - 1
-    //       ? matrixValuesCopy[row][column + 1].value
-    //       : null,
-    //   bottomLeft:
-    //     row < squareRoot - 1 && column > 0
-    //       ? matrixValuesCopy[row + 1][column - 1].value
-    //       : null,
-    //   bottom:
-    //     row < squareRoot - 1 ? matrixValuesCopy[row + 1][column].value : null,
-    //   bottomRight:
-    //     row < squareRoot - 1 && column < squareRoot - 1
-    //       ? matrixValuesCopy[row + 1][column + 1].value
-    //       : null,
-    // });
   };
 
   useEffect(() => {
@@ -132,8 +77,8 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
         borderTop: "1px double #fff",
         borderBottom: "1px double #fff",
         overflow: "hidden",
-        marginTop: 100,
-        marginLeft: 100,
+        // marginTop: 100,
+        // marginLeft: 100,
       }}
     >
       <motion.div
@@ -180,10 +125,6 @@ const DigitRow = ({ row, values, onHoverProgress }) => {
           row={row}
           columnPortion={1 / values.length}
           axis={randomInt(0, 1) === 0 ? "x" : "y"}
-          // enlargementProgress={valueItem.enlargementProgress}
-          // adjacentHover={valueItem.adjacentHover}
-          // onHoverStart={onHoverStart}
-          // onHoverEnd={onHoverEnd}
           enlargement={valueItem.enlargement}
           onHoverProgress={onHoverProgress}
         />
