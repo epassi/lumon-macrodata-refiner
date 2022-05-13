@@ -71,13 +71,13 @@ const Digit = ({
       }}
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      // onMouseLeave={handleMouseLeave}
       drag
     >
       <motion.span
         style={{
           fontSize: "1.2vw",
-          scale,
+          // scale,
           // lineHeight: `${columnPortion * 100}vw`,
           // textAlign: "center",
         }}
@@ -85,7 +85,7 @@ const Digit = ({
           scale,
         }}
         transition={{
-          duration: 0.2,
+          duration: 0.3,
         }}
       >
         {value}
