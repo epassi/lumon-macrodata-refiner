@@ -43,39 +43,10 @@ const Digit = ({
       bottomRight: (pointer.y * pointer.x) / (digitWidth * digitHeight),
     };
 
-    const progressX = mapping({
-      sourceValue: pointer.x,
-      sourceRange: [0, digitWidth],
-      mappedRange: [-1, 1],
-    });
-
-    const progressY = mapping({
-      sourceValue: pointer.y,
-      sourceRange: [0, digitHeight],
-      mappedRange: [-1, 1],
-    });
-
-    const progressDiagonal = mapping({
-      sourceValue: Math.sqrt(progressX ** 2 + progressY ** 2),
-      sourceRange: [0, Math.sqrt(2)],
-      mappedRange: [0, 1],
-    });
-
-    // const progressDiagonal = mapping({
-    //   sourceValue: Math.sqrt(pointer.x ** 2 + pointer.y ** 2),
-    //   sourceRange: [
-    //     0,
-    //     Math.sqrt((digitWidth / 2) ** 2 + (digitHeight / 2) ** 2),
-    //   ],
-    //   mappedRange: [0, 1],
-    // });
-
     onHoverProgress({
       column,
       row,
-      progressX,
-      progressY,
-      progressDiagonal,
+      ...coverage,
     });
   };
 
@@ -98,14 +69,15 @@ const Digit = ({
         justifyContent: "center",
         alignItems: "center",
       }}
-      whileHover={{ outline: "1px solid #fff" }}
+      // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
-      // onMouseLeave={handleMouseLeave}
+      onMouseLeave={handleMouseLeave}
       drag
     >
       <motion.span
         style={{
           fontSize: "1.2vw",
+          scale,
           // lineHeight: `${columnPortion * 100}vw`,
           // textAlign: "center",
         }}

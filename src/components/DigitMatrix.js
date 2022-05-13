@@ -16,36 +16,49 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   const handleHoverProgress = ({
     column,
     row,
-    progressX,
-    progressY,
-    progressDiagonal,
+    topLeft,
+    top,
+    topRight,
+    left,
+    right,
+    bottomLeft,
+    bottom,
+    bottomRight,
   }) => {
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
 
     matrixValuesCopy[row][column].enlargement = 1;
 
-    if (progressX < 0 && column > 0) {
-      matrixValuesCopy[row][column - 1].enlargement = Math.abs(progressX);
-    } else if (progressX >= 0 && column < squareRoot - 1) {
-      matrixValuesCopy[row][column + 1].enlargement = progressX;
+    if (column > 0) {
+      matrixValuesCopy[row][column - 1].enlargement = left;
     }
 
-    if (progressY < 0 && row > 0) {
-      matrixValuesCopy[row - 1][column].enlargement = Math.abs(progressY);
-    } else if (progressY >= 0 && row < squareRoot - 1) {
-      matrixValuesCopy[row + 1][column].enlargement = progressY;
+    if (column < squareRoot - 1) {
+      matrixValuesCopy[row][column + 1].enlargement = right;
     }
 
-    console.log(progressDiagonal);
+    if (row > 0) {
+      matrixValuesCopy[row - 1][column].enlargement = top;
+    }
 
-    if (progressX < 0 && progressY < 0) {
-      matrixValuesCopy[row - 1][column - 1].enlargement = progressDiagonal;
-    } else if (progressX > 0 && progressY < 0) {
-      matrixValuesCopy[row - 1][column + 1].enlargement = progressDiagonal;
-    } else if (progressX > 0 && progressY > 0) {
-      matrixValuesCopy[row + 1][column + 1].enlargement = progressDiagonal;
-    } else if (progressX < 0 && progressY > 0) {
-      matrixValuesCopy[row + 1][column - 1].enlargement = progressDiagonal;
+    if (row < squareRoot - 1) {
+      matrixValuesCopy[row + 1][column].enlargement = bottom;
+    }
+
+    if (column > 0 && row > 0) {
+      matrixValuesCopy[row - 1][column - 1].enlargement = topLeft;
+    }
+
+    if (column < squareRoot - 1 && row > 0) {
+      matrixValuesCopy[row - 1][column + 1].enlargement = topRight;
+    }
+
+    if (column > 0 && row < squareRoot - 1) {
+      matrixValuesCopy[row + 1][column - 1].enlargement = bottomLeft;
+    }
+
+    if (column < squareRoot - 1 && row < squareRoot - 1) {
+      matrixValuesCopy[row + 1][column + 1].enlargement = bottomRight;
     }
 
     setMatrixValues(matrixValuesCopy);
