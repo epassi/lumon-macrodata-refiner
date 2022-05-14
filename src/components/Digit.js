@@ -74,22 +74,37 @@ const Digit = ({
       // onMouseLeave={handleMouseLeave}
       drag
     >
-      <motion.span
+      <motion.div
         style={{
-          fontSize: "1.2vw",
-          // scale,
-          // lineHeight: `${columnPortion * 100}vw`,
-          // textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
         animate={{
-          scale,
+          x: axis === "x" ? Math.random() * 24 - 12 : 0,
+          y: axis === "y" ? Math.random() * 24 - 12 : 0,
         }}
         transition={{
-          duration: 0.3,
+          duration: Math.random() * 2 + 0.8,
+          repeatType: "mirror",
+          repeat: Infinity,
         }}
       >
-        {value}
-      </motion.span>
+        <motion.span
+          style={{
+            fontSize: "1.5vw",
+            // scale,
+          }}
+          animate={{
+            scale,
+          }}
+          transition={{
+            duration: 0.2,
+          }}
+        >
+          {value}
+        </motion.span>
+      </motion.div>
     </motion.div>
   );
 };
