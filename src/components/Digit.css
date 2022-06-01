@@ -1,0 +1,24 @@
+.wiggle-container {
+  --wiggle-range: 8px;
+  --wiggle-duration: 3s;
+  --wiggle-axis: wiggle-x;
+  animation: var(--wiggle-duration) linear infinite alternate var(--wiggle-axis);
+}
+
+@keyframes wiggle-x {
+  from {
+    transform: translateX(-var(--wiggle-range))
+  }
+  to {
+    transform: translateX(var(--wiggle-range));
+  }
+}
+
+@keyframes wiggle-y {
+  from {
+    transform: translateY(-var(--wiggle-range))
+  }
+  to {
+    transform: translateY(var(--wiggle-range));
+  }
+}

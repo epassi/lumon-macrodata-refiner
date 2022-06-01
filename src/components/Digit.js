@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { mapping } from "../origamish";
+import "./Digit.css";
 
 const Digit = ({
   column,
@@ -12,6 +13,7 @@ const Digit = ({
   onHoverProgress,
 }) => {
   const rootElRef = useRef(null);
+  const wiggleElRef = useRef(null);
   const [scale, setScale] = useState(1);
 
   const handleMouseMove = ({ pageX, pageY }) => {
@@ -55,11 +57,26 @@ const Digit = ({
   };
 
   useEffect(() => {
-    setScale(1 + enlargement);
+    setScale(1 + enlargement * 1.2);
   }, [enlargement]);
 
+  useEffect(() => {
+    wiggleElRef.current.style.setProperty(
+      "--wiggle-range",
+      `${Math.random() * 16}px`
+    );
+    wiggleElRef.current.style.setProperty(
+      "--wiggle-duration",
+      `${Math.random() * 4 + 1}s`
+    );
+    wiggleElRef.current.style.setProperty(
+      "--wiggle-axis",
+      Math.round(Math.random()) ? "wiggle-x" : "wiggle-y"
+    );
+  }, []);
+
   return (
-    <motion.div
+    <div
       ref={rootElRef}
       style={{
         width: `${columnPortion * 100}vw`,
@@ -72,22 +89,15 @@ const Digit = ({
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
       // onMouseLeave={handleMouseLeave}
-      drag
+      // drag
     >
-      <motion.div
+      <div
+        ref={wiggleElRef}
+        className="wiggle-container"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-        }}
-        animate={{
-          x: axis === "x" ? Math.random() * 24 - 12 : 0, // Some number between 12 and 24
-          y: axis === "y" ? Math.random() * 24 - 12 : 0, // Some number between 12 and 24
-        }}
-        transition={{
-          duration: Math.random() * 2 + 0.8,
-          repeatType: "mirror",
-          repeat: Infinity,
         }}
       >
         <motion.span
@@ -100,12 +110,13 @@ const Digit = ({
           }}
           transition={{
             duration: 0.2,
+            ease: "linear",
           }}
         >
           {value}
         </motion.span>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
