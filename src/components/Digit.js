@@ -51,10 +51,6 @@ const Digit = ({
     });
   };
 
-  // const handleMouseLeave = () => {
-  //   setScale(1);
-  // };
-
   useEffect(() => {
     setScale(1 + enlargement * 1.2);
   }, [enlargement]);
@@ -87,7 +83,6 @@ const Digit = ({
       }}
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
-      // onMouseLeave={handleMouseLeave}
     >
       <div
         ref={wiggleElRef}

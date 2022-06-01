@@ -27,6 +27,13 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   }) => {
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
 
+    // Reset all enlargements to 0.
+    matrixValuesCopy.forEach((row) => {
+      row.forEach((digit) => {
+        digit.enlargement = 0;
+      });
+    });
+
     matrixValuesCopy[row][column].enlargement = 1;
 
     if (column > 0) {
