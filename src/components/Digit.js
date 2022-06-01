@@ -6,10 +6,12 @@ const Digit = ({
   column,
   row,
   value,
-  axis,
   columnPortion,
   enlargement,
+  selected,
   onHoverProgress,
+  onMouseDown,
+  onMouseUp,
 }) => {
   const rootElRef = useRef(null);
   const wiggleElRef = useRef(null);
@@ -52,7 +54,7 @@ const Digit = ({
   };
 
   useEffect(() => {
-    setScale(1 + enlargement * 1.2);
+    setScale(1 + enlargement * 1.1);
   }, [enlargement]);
 
   useEffect(() => {
@@ -80,9 +82,12 @@ const Digit = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        userSelect: "none",
       }}
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
     >
       <div
         ref={wiggleElRef}
@@ -98,7 +103,7 @@ const Digit = ({
             fontSize: "1.5vw",
           }}
           animate={{
-            scale,
+            scale: selected ? 2.6 : scale,
           }}
           transition={{
             duration: 0.2,

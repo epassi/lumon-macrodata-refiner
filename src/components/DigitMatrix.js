@@ -3,7 +3,6 @@ import { matrixDeepCopy, randomInt } from "../util";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import useSize from "@react-hook/size";
-import { mapping } from "../origamish";
 
 const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   const zoomPortElRef = useRef(null);
@@ -12,6 +11,24 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   const [transformOriginY, setTransformOriginY] = useState(0);
   const [zoomPortWidth, zoomPortHeight] = useSize(zoomPortElRef);
   const [matrixWidth, matrixHeight] = useSize(matrixElRef);
+  const [selectionEnabled, setSelectionEnabled] = useState(false);
+
+  const handleMouseDown = () => {
+    // Deselect all digits.
+    const matrixValuesCopy = matrixDeepCopy(matrixValues);
+    matrixValuesCopy.forEach((row) => {
+      row.forEach((digit) => {
+        digit.selected = false;
+      });
+    });
+    setMatrixValues(matrixValuesCopy);
+
+    setSelectionEnabled(true);
+  };
+
+  const handleMouseUp = () => {
+    setSelectionEnabled(false);
+  };
 
   const handleHoverProgress = ({
     column,
@@ -35,6 +52,9 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
     });
 
     matrixValuesCopy[row][column].enlargement = 1;
+    if (!matrixValuesCopy[row][column].selected) {
+      matrixValuesCopy[row][column].selected = selectionEnabled;
+    }
 
     if (column > 0) {
       matrixValuesCopy[row][column - 1].enlargement = left;
@@ -83,6 +103,7 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
         randomValues[y][x] = {
           value: randomInt(0, 9),
           enlargement: 0,
+          selected: false,
         };
       }
     }
@@ -123,6 +144,8 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
             row={i}
             values={rowValues}
             onHoverProgress={handleHoverProgress}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
           />
         ))}
       </motion.div>
@@ -130,7 +153,7 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   );
 };
 
-const DigitRow = ({ row, values, onHoverProgress }) => {
+const DigitRow = ({ row, values, onHoverProgress, onMouseDown, onMouseUp }) => {
   return (
     <div
       style={{
@@ -146,7 +169,10 @@ const DigitRow = ({ row, values, onHoverProgress }) => {
           columnPortion={1 / values.length}
           axis={randomInt(0, 1) === 0 ? "x" : "y"}
           enlargement={valueItem.enlargement}
+          selected={valueItem.selected}
           onHoverProgress={onHoverProgress}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
         />
       ))}
     </div>
