@@ -81,8 +81,8 @@ const Digit = ({
           alignItems: "center",
         }}
         animate={{
-          x: axis === "x" ? Math.random() * 24 - 12 : 0,
-          y: axis === "y" ? Math.random() * 24 - 12 : 0,
+          x: axis === "x" ? Math.random() * 24 - 12 : 0, // Some number between 12 and 24
+          y: axis === "y" ? Math.random() * 24 - 12 : 0, // Some number between 12 and 24
         }}
         transition={{
           duration: Math.random() * 2 + 0.8,
