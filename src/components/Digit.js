@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { mapping } from "../origamish";
 import "./Digit.css";
 
 const Digit = ({
@@ -52,9 +51,9 @@ const Digit = ({
     });
   };
 
-  const handleMouseLeave = () => {
-    setScale(1);
-  };
+  // const handleMouseLeave = () => {
+  //   setScale(1);
+  // };
 
   useEffect(() => {
     setScale(1 + enlargement * 1.2);
@@ -89,7 +88,6 @@ const Digit = ({
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
       // onMouseLeave={handleMouseLeave}
-      // drag
     >
       <div
         ref={wiggleElRef}
@@ -103,7 +101,6 @@ const Digit = ({
         <motion.span
           style={{
             fontSize: "1.5vw",
-            // scale,
           }}
           animate={{
             scale,
