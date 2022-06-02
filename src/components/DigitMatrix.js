@@ -93,6 +93,11 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
 
   useEffect(() => {
     setTransformOriginY((100 * 0.5 * zoomPortHeight) / matrixHeight);
+    // setBinOrigin01(0)
+    // setBinOrigin02(0)
+    // setBinOrigin03(0)
+    // setBinOrigin04(0)
+    // setBinOrigin05(0)
   }, [zoomPortWidth, zoomPortHeight, matrixWidth, matrixHeight]);
 
   useEffect(() => {
@@ -114,12 +119,8 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
     <div
       ref={zoomPortElRef}
       style={{
-        height: "80vh",
-        borderTop: "1px double #fff",
-        borderBottom: "1px double #fff",
+        flex: "1 0 10vh",
         overflow: "hidden",
-        // marginTop: 100,
-        // marginLeft: 100,
       }}
     >
       <motion.div

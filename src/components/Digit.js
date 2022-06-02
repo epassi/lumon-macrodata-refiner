@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, animate, useMotionValue } from "framer-motion";
 import "./Digit.css";
+import { useKeyPress } from "../util";
 
 const Digit = ({
   column,
@@ -16,6 +17,20 @@ const Digit = ({
   const rootElRef = useRef(null);
   const wiggleElRef = useRef(null);
   const [scale, setScale] = useState(1);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const bin01 = useKeyPress("1");
+  // const bin02 = useKeyPress("2");
+  // const bin03 = useKeyPress("3");
+  // const bin04 = useKeyPress("4");
+  // const bin05 = useKeyPress("5");
+
+  useEffect(() => {
+    if (bin01 && selected) {
+      animate(x, 400);
+      animate(y, 400);
+    }
+  }, [bin01, selected, x, y]);
 
   const handleMouseMove = ({ pageX, pageY }) => {
     const {
@@ -73,7 +88,7 @@ const Digit = ({
   }, []);
 
   return (
-    <div
+    <motion.div
       ref={rootElRef}
       style={{
         width: `${columnPortion * 100}vw`,
@@ -83,6 +98,7 @@ const Digit = ({
         justifyContent: "center",
         alignItems: "center",
         userSelect: "none",
+        y,
       }}
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
@@ -113,7 +129,7 @@ const Digit = ({
           {value}
         </motion.span>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

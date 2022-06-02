@@ -87,3 +87,65 @@ export const useViewControls = () => {
 
   return { pan, zoom };
 };
+
+export const useKeyPress = (targetKey) => {
+  const [keyPressed, setKeyPressed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = ({ key }) => {
+      if (key === targetKey) setKeyPressed(true);
+    };
+
+    const handleKeyUp = ({ key }) => {
+      if (key === targetKey) setKeyPressed(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [targetKey]);
+
+  return keyPressed;
+};
+
+// export const useBinControls = () => {
+//   const [bin, setBin] = useState(0);
+
+//   const handleKeyDown = useCallback(
+//     (event) => {
+//       switch (event.key) {
+//         case "1":
+//           setBin(1);
+//           break;
+//         case "2":
+//           setBin(2);
+//           break;
+//         case "3":
+//           setBin(3);
+//           break;
+//         case "4":
+//           setBin(4);
+//           break;
+//         case "5":
+//           setBin(5);
+//           break;
+//         default:
+//           setBin(bin);
+//       }
+//     },
+//     [bin]
+//   );
+
+//   useEffect(() => {
+//     window.addEventListener("keydown", handleKeyDown);
+
+//     return () => {
+//       window.removeEventListener("keydown", handleKeyDown);
+//     };
+//   }, [handleKeyDown]);
+
+//   return bin;
+// };
