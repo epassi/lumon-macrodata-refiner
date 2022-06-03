@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, animate, useMotionValue } from "framer-motion";
 import "./Digit.css";
 import { useKeyPress } from "../util";
@@ -10,6 +10,8 @@ const Digit = ({
   columnPortion,
   enlargement,
   selected,
+  binPositions,
+  matrixFoldPosition,
   onHoverProgress,
   onMouseDown,
   onMouseUp,
@@ -20,17 +22,36 @@ const Digit = ({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const bin01 = useKeyPress("1");
-  // const bin02 = useKeyPress("2");
-  // const bin03 = useKeyPress("3");
-  // const bin04 = useKeyPress("4");
-  // const bin05 = useKeyPress("5");
+  const bin02 = useKeyPress("2");
+  const bin03 = useKeyPress("3");
+  const bin04 = useKeyPress("4");
+  const bin05 = useKeyPress("5");
+
+  const moveToBin = useCallback(
+    (binIndex) => {
+      console.log("move to ", binPositions[binIndex]);
+      const digitRect = rootElRef.current.getBoundingClientRect();
+      animate(x, binPositions[binIndex] - digitRect.x - digitRect.width / 2, {
+        duration: 1.2,
+      });
+      animate(y, matrixFoldPosition - digitRect.y, { duration: 1.5 });
+    },
+    [binPositions, matrixFoldPosition, x, y]
+  );
 
   useEffect(() => {
     if (bin01 && selected) {
-      animate(x, 400);
-      animate(y, 400);
+      moveToBin(0);
+    } else if (bin02 && selected) {
+      moveToBin(1);
+    } else if (bin03 && selected) {
+      moveToBin(2);
+    } else if (bin04 && selected) {
+      moveToBin(3);
+    } else if (bin05 && selected) {
+      moveToBin(4);
     }
-  }, [bin01, selected, x, y]);
+  }, [bin01, bin02, bin03, bin04, bin05, selected, moveToBin]);
 
   const handleMouseMove = ({ pageX, pageY }) => {
     const {
@@ -98,6 +119,7 @@ const Digit = ({
         justifyContent: "center",
         alignItems: "center",
         userSelect: "none",
+        x,
         y,
       }}
       // whileHover={{ outline: "1px solid #fff" }}

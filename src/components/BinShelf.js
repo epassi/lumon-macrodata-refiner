@@ -1,5 +1,5 @@
 import Bin from "./Bin";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const BinShelf = ({ onBinPositionChange }) => {
   const rootElRef = useRef(null);
@@ -9,28 +9,27 @@ const BinShelf = ({ onBinPositionChange }) => {
   const binRef04 = useRef(null);
   const binRef05 = useRef(null);
 
+  const handleResize = useCallback(() => {
+    const binRect01 = binRef01.current.getBoundingClientRect();
+    const binRect02 = binRef02.current.getBoundingClientRect();
+    const binRect03 = binRef03.current.getBoundingClientRect();
+    const binRect04 = binRef04.current.getBoundingClientRect();
+    const binRect05 = binRef05.current.getBoundingClientRect();
+    onBinPositionChange([
+      binRect01.x + binRect01.width / 2,
+      binRect02.x + binRect02.width / 2,
+      binRect03.x + binRect03.width / 2,
+      binRect04.x + binRect04.width / 2,
+      binRect05.x + binRect05.width / 2,
+    ]);
+  }, [onBinPositionChange]);
+
   useEffect(() => {
-    const handleResize = () => {
-      const binRect01 = binRef01.current.getBoundingClientRect();
-      const binRect02 = binRef02.current.getBoundingClientRect();
-      const binRect03 = binRef03.current.getBoundingClientRect();
-      const binRect04 = binRef04.current.getBoundingClientRect();
-      const binRect05 = binRef05.current.getBoundingClientRect();
-      onBinPositionChange([
-        binRect01.x + binRect01.width / 2,
-        binRect02.x + binRect02.width / 2,
-        binRect03.x + binRect03.width / 2,
-        binRect04.x + binRect04.width / 2,
-        binRect05.x + binRect05.width / 2,
-      ]);
-    };
-
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [onBinPositionChange]);
+  }, [handleResize]);
 
   return (
     <div

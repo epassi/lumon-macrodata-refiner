@@ -11,7 +11,6 @@ const Refiner = () => {
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
 
   const handleBinPositionChange = (positions) => {
-    console.log(positions);
     setBinPositions(positions);
   };
 
