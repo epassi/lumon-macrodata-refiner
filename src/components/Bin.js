@@ -1,6 +1,9 @@
-const Bin = ({ label }) => {
+import { forwardRef } from "react";
+
+const Bin = forwardRef(({ label }, ref) => {
   return (
     <div
+      ref={ref}
       style={{
         width: "16vw",
         display: "flex",
@@ -32,6 +35,6 @@ const Bin = ({ label }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Bin;
