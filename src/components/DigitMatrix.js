@@ -156,6 +156,7 @@ const DigitMatrix = ({
             values={rowValues}
             binPositions={binPositions}
             matrixFoldPosition={matrixFoldPosition}
+            zoom={zoom}
             onHoverProgress={handleHoverProgress}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -171,6 +172,7 @@ const DigitRow = ({
   values,
   binPositions,
   matrixFoldPosition,
+  zoom,
   onHoverProgress,
   onMouseDown,
   onMouseUp,
@@ -193,6 +195,7 @@ const DigitRow = ({
           selected={valueItem.selected}
           binPositions={binPositions}
           matrixFoldPosition={matrixFoldPosition}
+          zoom={zoom}
           onHoverProgress={onHoverProgress}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}

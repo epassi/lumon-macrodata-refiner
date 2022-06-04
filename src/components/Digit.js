@@ -12,6 +12,7 @@ const Digit = ({
   selected,
   binPositions,
   matrixFoldPosition,
+  zoom,
   onHoverProgress,
   onMouseDown,
   onMouseUp,
@@ -31,12 +32,16 @@ const Digit = ({
     (binIndex) => {
       console.log("move to ", binPositions[binIndex]);
       const digitRect = rootElRef.current.getBoundingClientRect();
-      animate(x, binPositions[binIndex] - digitRect.x - digitRect.width / 2, {
-        duration: 1.2,
-      });
-      animate(y, matrixFoldPosition - digitRect.y, { duration: 1.5 });
+      animate(
+        x,
+        (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
+        {
+          duration: 1.2,
+        }
+      );
+      animate(y, (matrixFoldPosition - digitRect.y) / zoom, { duration: 1.5 });
     },
-    [binPositions, matrixFoldPosition, x, y]
+    [binPositions, matrixFoldPosition, x, y, zoom]
   );
 
   useEffect(() => {
