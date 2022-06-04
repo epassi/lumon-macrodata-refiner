@@ -32,14 +32,12 @@ const Digit = ({
     (binIndex) => {
       console.log("move to ", binPositions[binIndex]);
       const digitRect = rootElRef.current.getBoundingClientRect();
-      animate(
-        x,
-        (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
-        {
-          duration: 1.2,
-        }
-      );
-      animate(y, (matrixFoldPosition - digitRect.y) / zoom, { duration: 1.5 });
+      const binTarget = {
+        x: (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
+        y: (matrixFoldPosition - digitRect.y) / zoom,
+      };
+      animate(x, binTarget.x, { duration: 1.2 });
+      animate(y, binTarget.y, { duration: 1.5 });
     },
     [binPositions, matrixFoldPosition, x, y, zoom]
   );
