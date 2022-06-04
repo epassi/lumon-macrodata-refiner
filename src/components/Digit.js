@@ -16,12 +16,14 @@ const Digit = ({
   onHoverProgress,
   onMouseDown,
   onMouseUp,
+  onBin,
 }) => {
   const rootElRef = useRef(null);
   const wiggleElRef = useRef(null);
   const [scale, setScale] = useState(1);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const opacity = useMotionValue(1);
   const bin01 = useKeyPress("1");
   const bin02 = useKeyPress("2");
   const bin03 = useKeyPress("3");
@@ -30,19 +32,30 @@ const Digit = ({
 
   const moveToBin = useCallback(
     (binIndex) => {
-      console.log("move to ", binPositions[binIndex]);
       const digitRect = rootElRef.current.getBoundingClientRect();
-      animate(
-        x,
-        (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
-        {
-          duration: 1.2,
-        }
-      );
-      animate(y, (matrixFoldPosition - digitRect.y) / zoom, { duration: 1.5 });
+      // const restoreRect = { x: digitRect.x, y: digitRect.y };
+      // console.log(restoreRect);
+      const binTarget = {
+        x: (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
+        y: (matrixFoldPosition - digitRect.y) / zoom,
+      };
+      animate(x, binTarget.x, { duration: 1.2 });
+      animate(y, binTarget.y, {
+        duration: 1.5,
+        onComplete: () => {
+          onBin({ column, row });
+          x.set(0);
+          y.set(0);
+          opacity.set(0);
+        },
+      });
     },
-    [binPositions, matrixFoldPosition, x, y, zoom]
+    [binPositions, matrixFoldPosition, onBin, column, row, x, y, opacity, zoom]
   );
+
+  useEffect(() => {
+    animate(opacity, 1, { duration: 1 });
+  }, [value, opacity]);
 
   useEffect(() => {
     if (bin01 && selected) {
@@ -126,6 +139,7 @@ const Digit = ({
         userSelect: "none",
         x,
         y,
+        opacity,
       }}
       // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}

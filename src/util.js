@@ -3,6 +3,15 @@ import { useCallback, useEffect, useState } from "react";
 export const randomInt = (min, max) =>
   Math.round(Math.random() * (max - min) + min);
 
+export const uniqueRandomInt = ({ dontRepeat, min, max }) => {
+  const value = randomInt(min, max);
+  if (value === dontRepeat) {
+    return uniqueRandomInt({ dontRepeat, min, max });
+  } else {
+    return value;
+  }
+};
+
 export const matrixDeepCopy = (matrixValues) => {
   const matrixCopy = [...matrixValues];
   matrixCopy.forEach((rowValues, y) => {
