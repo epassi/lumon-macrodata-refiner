@@ -54,7 +54,7 @@ const Digit = ({
   );
 
   useEffect(() => {
-    animate(opacity, 1, { duration: 1 });
+    animate(opacity, 1, { duration: 2 });
   }, [value, opacity]);
 
   useEffect(() => {
