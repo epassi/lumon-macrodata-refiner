@@ -1,5 +1,5 @@
 import Digit from "./Digit";
-import { matrixDeepCopy, randomInt } from "../util";
+import { matrixDeepCopy, randomInt, uniqueRandomInt } from "../util";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import useSize from "@react-hook/size";
@@ -19,6 +19,19 @@ const DigitMatrix = ({
   const [matrixWidth, matrixHeight] = useSize(matrixElRef);
   const [selectionEnabled, setSelectionEnabled] = useState(false);
   const [matrixFoldPosition, setMatrixFoldPosition] = useState(0);
+
+  const handleBin = ({ column, row }) => {
+    const matrixValuesCopy = matrixDeepCopy(matrixValues);
+    matrixValuesCopy[row][column].selected = false;
+
+    const currentDigitValue = matrixValuesCopy[row][column].value;
+    matrixValuesCopy[row][column].value = uniqueRandomInt({
+      dontRepeat: currentDigitValue,
+      min: 0,
+      max: 9,
+    });
+    setMatrixValues(matrixValuesCopy);
+  };
 
   const handleMouseDown = () => {
     // Deselect all digits.
@@ -160,6 +173,7 @@ const DigitMatrix = ({
             onHoverProgress={handleHoverProgress}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
+            onBin={handleBin}
           />
         ))}
       </motion.div>
@@ -176,6 +190,7 @@ const DigitRow = ({
   onHoverProgress,
   onMouseDown,
   onMouseUp,
+  onBin,
 }) => {
   return (
     <div
@@ -199,6 +214,7 @@ const DigitRow = ({
           onHoverProgress={onHoverProgress}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
+          onBin={onBin}
         />
       ))}
     </div>
