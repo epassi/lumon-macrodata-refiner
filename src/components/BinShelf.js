@@ -31,6 +31,10 @@ const BinShelf = ({ onBinPositionChange }) => {
     };
   }, [handleResize]);
 
+  useEffect(() => {
+    handleResize();
+  }, []); // Don't include handleResize. Causes infinite calls.
+
   return (
     <div
       ref={rootElRef}
