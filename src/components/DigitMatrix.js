@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import useSize from "@react-hook/size";
 
-const DigitMatrix = ({ squareRoot, pan, zoom }) => {
+const DigitMatrix = ({
+  squareRoot,
+  pan,
+  zoom,
+  binPositions,
+  onMatrixFoldChange,
+}) => {
   const zoomPortElRef = useRef(null);
   const matrixElRef = useRef(null);
   const [matrixValues, setMatrixValues] = useState([]);
@@ -12,6 +18,7 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   const [zoomPortWidth, zoomPortHeight] = useSize(zoomPortElRef);
   const [matrixWidth, matrixHeight] = useSize(matrixElRef);
   const [selectionEnabled, setSelectionEnabled] = useState(false);
+  const [matrixFoldPosition, setMatrixFoldPosition] = useState(0);
 
   const handleMouseDown = () => {
     // Deselect all digits.
@@ -93,7 +100,15 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
 
   useEffect(() => {
     setTransformOriginY((100 * 0.5 * zoomPortHeight) / matrixHeight);
-  }, [zoomPortWidth, zoomPortHeight, matrixWidth, matrixHeight]);
+    const zoomPortRect = zoomPortElRef.current.getBoundingClientRect();
+    setMatrixFoldPosition(zoomPortRect.y + zoomPortRect.height);
+  }, [
+    zoomPortWidth,
+    zoomPortHeight,
+    matrixWidth,
+    matrixHeight,
+    onMatrixFoldChange,
+  ]);
 
   useEffect(() => {
     const randomValues = new Array(squareRoot);
@@ -114,12 +129,8 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
     <div
       ref={zoomPortElRef}
       style={{
-        height: "80vh",
-        borderTop: "1px double #fff",
-        borderBottom: "1px double #fff",
+        flex: "1 0 10vh",
         overflow: "hidden",
-        // marginTop: 100,
-        // marginLeft: 100,
       }}
     >
       <motion.div
@@ -143,6 +154,9 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
             key={i}
             row={i}
             values={rowValues}
+            binPositions={binPositions}
+            matrixFoldPosition={matrixFoldPosition}
+            zoom={zoom}
             onHoverProgress={handleHoverProgress}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -153,7 +167,16 @@ const DigitMatrix = ({ squareRoot, pan, zoom }) => {
   );
 };
 
-const DigitRow = ({ row, values, onHoverProgress, onMouseDown, onMouseUp }) => {
+const DigitRow = ({
+  row,
+  values,
+  binPositions,
+  matrixFoldPosition,
+  zoom,
+  onHoverProgress,
+  onMouseDown,
+  onMouseUp,
+}) => {
   return (
     <div
       style={{
@@ -170,6 +193,9 @@ const DigitRow = ({ row, values, onHoverProgress, onMouseDown, onMouseUp }) => {
           axis={randomInt(0, 1) === 0 ? "x" : "y"}
           enlargement={valueItem.enlargement}
           selected={valueItem.selected}
+          binPositions={binPositions}
+          matrixFoldPosition={matrixFoldPosition}
+          zoom={zoom}
           onHoverProgress={onHoverProgress}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
