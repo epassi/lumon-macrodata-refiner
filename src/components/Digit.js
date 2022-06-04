@@ -39,9 +39,10 @@ const Digit = ({
         x: (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
         y: (matrixFoldPosition - digitRect.y) / zoom,
       };
-      animate(x, binTarget.x, { duration: 1.2 });
+      const duration = 1.5;
+      animate(x, binTarget.x, { duration: 0.75 * duration });
       animate(y, binTarget.y, {
-        duration: 1.5,
+        duration,
         onComplete: () => {
           onBin({ column, row });
           x.set(0);
