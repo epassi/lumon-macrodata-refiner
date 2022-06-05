@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, animate, useMotionValue } from "framer-motion";
 import "./Digit.css";
-import { useKeyPress } from "../util";
+import { randomInt, useKeyPress } from "../util";
 
 const Digit = ({
   column,
@@ -55,7 +55,7 @@ const Digit = ({
   );
 
   useEffect(() => {
-    animate(opacity, 1, { duration: 2 });
+    animate(opacity, 1, { duration: 1.5, delay: Math.random() });
   }, [value, opacity]);
 
   useEffect(() => {
