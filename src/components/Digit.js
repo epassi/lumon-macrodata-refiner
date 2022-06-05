@@ -23,7 +23,7 @@ const Digit = ({
   const [scale, setScale] = useState(1);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const opacity = useMotionValue(1);
+  const opacity = useMotionValue(0);
   const bin01 = useKeyPress("1");
   const bin02 = useKeyPress("2");
   const bin03 = useKeyPress("3");
@@ -55,8 +55,12 @@ const Digit = ({
   );
 
   useEffect(() => {
-    animate(opacity, 1, { duration: 1.5, delay: Math.random() });
+    animate(opacity, 1, { duration: 2, delay: Math.random() });
   }, [value, opacity]);
+
+  useEffect(() => {
+    animate(opacity, 1, { duration: 2, delay: Math.random() });
+  }, [opacity]);
 
   useEffect(() => {
     if (bin01 && selected) {
