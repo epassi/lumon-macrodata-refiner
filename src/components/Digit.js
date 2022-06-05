@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, animate, useMotionValue } from "framer-motion";
 import "./Digit.css";
-import { randomInt, useKeyPress } from "../util";
 
 const Digit = ({
   column,
@@ -11,12 +10,17 @@ const Digit = ({
   enlargement,
   selected,
   binPositions,
+  bin01,
+  bin02,
+  bin03,
+  bin04,
+  bin05,
   matrixFoldPosition,
   zoom,
   onHoverProgress,
   onMouseDown,
   onMouseUp,
-  onBin,
+  onBinEnd,
 }) => {
   const rootElRef = useRef(null);
   const wiggleElRef = useRef(null);
@@ -24,38 +28,47 @@ const Digit = ({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const opacity = useMotionValue(0);
-  const bin01 = useKeyPress("1");
-  const bin02 = useKeyPress("2");
-  const bin03 = useKeyPress("3");
-  const bin04 = useKeyPress("4");
-  const bin05 = useKeyPress("5");
 
   const moveToBin = useCallback(
     (binIndex) => {
       const digitRect = rootElRef.current.getBoundingClientRect();
-      // const restoreRect = { x: digitRect.x, y: digitRect.y };
-      // console.log(restoreRect);
       const binTarget = {
         x: (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
         y: (matrixFoldPosition - digitRect.y) / zoom,
       };
       const duration = 1.5;
-      animate(x, binTarget.x, { duration: 0.75 * duration });
+      animate(x, binTarget.x, {
+        delay: 1,
+        duration: 0.75 * duration, // Slow X rate to create curved motion path
+      });
       animate(y, binTarget.y, {
+        delay: 1,
         duration,
         onComplete: () => {
-          onBin({ column, row });
+          onBinEnd({ column, row });
           x.set(0);
           y.set(0);
           opacity.set(0);
         },
       });
     },
-    [binPositions, matrixFoldPosition, onBin, column, row, x, y, opacity, zoom]
+    [
+      binPositions,
+      matrixFoldPosition,
+      onBinEnd,
+      column,
+      row,
+      x,
+      y,
+      opacity,
+      zoom,
+    ]
   );
 
   useEffect(() => {
-    animate(opacity, 1, { duration: 2, delay: Math.random() });
+    // Hack: adding 0.5s delay so that fade-in occurs after bin closes.
+    // Should be callback-driven but couldn't get it to work right.
+    animate(opacity, 1, { duration: 2, delay: 0.5 + Math.random() });
   }, [value, opacity]);
 
   useEffect(() => {
