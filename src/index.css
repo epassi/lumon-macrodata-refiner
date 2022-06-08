@@ -13,6 +13,6 @@ body {
   margin: 0;
   /* font-family: "Montserrat", sans-serif; */
 
-  color: #fff;
-  background: #000;
+  color: #D1F4ED;
+  background: url(assets/images/background-tile.png) #060D29;
 }

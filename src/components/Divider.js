@@ -3,8 +3,8 @@ const Divider = ({ weight }) => {
     <div
       style={{
         flex: "0 0 0.3rem",
-        borderTop: "1px solid #fff",
-        borderBottom: weight === "double" ? "1px solid #fff" : 0,
+        borderTop: "1px solid #D1F4ED",
+        borderBottom: weight === "double" ? "1px solid #D1F4ED" : 0,
       }}
     ></div>
   );

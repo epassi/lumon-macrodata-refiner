@@ -1,6 +1,7 @@
 import { useState, forwardRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import useSize from "@react-hook/size";
+import backgroundTile from "../assets/images/background-tile.png";
 
 const Bin = forwardRef(({ label, active }, rootElRef) => {
   const [open, setOpen] = useState(false);
@@ -65,8 +66,9 @@ const BoxLabel = ({ label }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        border: "1px solid #fff",
-        background: "#000",
+        border: "1px solid #D1F4ED",
+        backgroundColor: "#060D29",
+        backgroundImage: `url(${backgroundTile})`,
       }}
     >
       {label}
@@ -85,8 +87,9 @@ const BoxOpening = ({ open }) => {
         left: 0,
         width: "100%",
         height: "0.9rem",
-        border: "1px solid #fff",
-        background: "#000",
+        border: "1px solid #D1F4ED",
+        backgroundColor: "#060D29",
+        backgroundImage: `url(${backgroundTile})`,
       }}
       animate={{
         y: open ? "-0.85rem" : 0,
@@ -164,10 +167,10 @@ const BoxFlap = ({ side, width, open }) => {
       width={width}
       height={height} // 0.9rem to match BoxOpening height
       viewBox={viewBox}
-      fill="#000"
+      fill="#060D29"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#fff" />
+      <path d={path} stroke="#D1F4ED" />
     </svg>
   );
 };
@@ -178,7 +181,7 @@ const ProgressBar = () => {
       style={{
         flex: "1 0 auto",
         padding: "0.2rem",
-        border: "1px solid #fff",
+        border: "1px solid #D1F4ED",
       }}
     >
       0%
