@@ -167,7 +167,6 @@ const BoxFlap = ({ side, width, open }) => {
       width={width}
       height={height} // 0.9rem to match BoxOpening height
       viewBox={viewBox}
-      // fill="#060D29"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
