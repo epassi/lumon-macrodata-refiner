@@ -167,10 +167,22 @@ const BoxFlap = ({ side, width, open }) => {
       width={width}
       height={height} // 0.9rem to match BoxOpening height
       viewBox={viewBox}
-      fill="#060D29"
+      // fill="#060D29"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" />
+      <defs>
+        <pattern
+          id="background-tile"
+          x="0"
+          y="0"
+          patternUnits="userSpaceOnUse"
+          height="2"
+          width="1"
+        >
+          <image x="0" y="0" href={backgroundTile}></image>
+        </pattern>
+      </defs>
+      <path d={path} stroke="#D1F4ED" fill="url(#background-tile)" />
     </svg>
   );
 };
