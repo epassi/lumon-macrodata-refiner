@@ -10,6 +10,11 @@ const DigitMatrix = ({
   zoom,
   binPositions,
   onMatrixFoldChange,
+  bin01,
+  bin02,
+  bin03,
+  bin04,
+  bin05,
 }) => {
   const zoomPortElRef = useRef(null);
   const matrixElRef = useRef(null);
@@ -20,7 +25,7 @@ const DigitMatrix = ({
   const [selectionEnabled, setSelectionEnabled] = useState(false);
   const [matrixFoldPosition, setMatrixFoldPosition] = useState(0);
 
-  const handleBin = ({ column, row }) => {
+  const handleBinEnd = ({ column, row }) => {
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
     matrixValuesCopy[row][column].selected = false;
 
@@ -170,10 +175,15 @@ const DigitMatrix = ({
             binPositions={binPositions}
             matrixFoldPosition={matrixFoldPosition}
             zoom={zoom}
+            bin01={bin01}
+            bin02={bin02}
+            bin03={bin03}
+            bin04={bin04}
+            bin05={bin05}
             onHoverProgress={handleHoverProgress}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            onBin={handleBin}
+            onBinEnd={handleBinEnd}
           />
         ))}
       </motion.div>
@@ -187,10 +197,15 @@ const DigitRow = ({
   binPositions,
   matrixFoldPosition,
   zoom,
+  bin01,
+  bin02,
+  bin03,
+  bin04,
+  bin05,
   onHoverProgress,
   onMouseDown,
   onMouseUp,
-  onBin,
+  onBinEnd,
 }) => {
   return (
     <div
@@ -209,12 +224,17 @@ const DigitRow = ({
           enlargement={valueItem.enlargement}
           selected={valueItem.selected}
           binPositions={binPositions}
+          bin01={bin01}
+          bin02={bin02}
+          bin03={bin03}
+          bin04={bin04}
+          bin05={bin05}
           matrixFoldPosition={matrixFoldPosition}
           zoom={zoom}
           onHoverProgress={onHoverProgress}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
-          onBin={onBin}
+          onBinEnd={onBinEnd}
         />
       ))}
     </div>
