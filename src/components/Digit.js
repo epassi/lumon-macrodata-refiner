@@ -150,7 +150,6 @@ const Digit = ({
       style={{
         width: `${columnPortion * 100}vw`,
         height: `${columnPortion * 100}vw`,
-        cursor: "default",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -159,7 +158,6 @@ const Digit = ({
         y,
         opacity,
       }}
-      // whileHover={{ outline: "1px solid #fff" }}
       onMouseMove={handleMouseMove}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}

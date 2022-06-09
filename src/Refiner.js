@@ -4,10 +4,13 @@ import Footer from "./components/Footer";
 import BinShelf from "./components/BinShelf";
 import DigitMatrix from "./components/DigitMatrix";
 import Divider from "./components/Divider";
+import Screen from "./components/Screen";
+import Cursor from "./components/Cursor";
 import { useViewControls, useKeyPress } from "./util";
 
 const Refiner = () => {
   const { pan, zoom } = useViewControls();
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
   const bin01 = useKeyPress("1");
   const bin02 = useKeyPress("2");
@@ -19,8 +22,19 @@ const Refiner = () => {
     setBinPositions(positions);
   };
 
+  const handleMouseMove = ({ pageX, pageY }) => {
+    setCursor({ x: pageX, y: pageY });
+  };
+
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+      onMouseMove={handleMouseMove}
+    >
       <Header />
       <Divider weight="double" />
       <DigitMatrix
@@ -45,6 +59,8 @@ const Refiner = () => {
       />
       <Divider weight="single" />
       <Footer />
+      <Screen />
+      <Cursor x={cursor.x} y={cursor.y} />
     </div>
   );
 };

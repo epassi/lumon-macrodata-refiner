@@ -1,7 +1,6 @@
 import { useState, forwardRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import useSize from "@react-hook/size";
-import backgroundTile from "../assets/images/background-tile.png";
 
 const Bin = forwardRef(({ label, active }, rootElRef) => {
   const [open, setOpen] = useState(false);
@@ -68,7 +67,6 @@ const BoxLabel = ({ label }) => {
         alignItems: "center",
         border: "1px solid #D1F4ED",
         backgroundColor: "#060D29",
-        backgroundImage: `url(${backgroundTile})`,
       }}
     >
       {label}
@@ -89,7 +87,6 @@ const BoxOpening = ({ open }) => {
         height: "0.9rem",
         border: "1px solid #D1F4ED",
         backgroundColor: "#060D29",
-        backgroundImage: `url(${backgroundTile})`,
       }}
       animate={{
         y: open ? "-0.85rem" : 0,
@@ -169,19 +166,7 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <defs>
-        <pattern
-          id="background-tile"
-          x="0"
-          y="0"
-          patternUnits="userSpaceOnUse"
-          height="2"
-          width="1"
-        >
-          <image x="0" y="0" href={backgroundTile}></image>
-        </pattern>
-      </defs>
-      <path d={path} stroke="#D1F4ED" fill="url(#background-tile)" />
+      <path d={path} stroke="#D1F4ED" fill="#060D29" />
     </svg>
   );
 };

@@ -7,6 +7,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  cursor: none;
 }
 
 body {
@@ -14,5 +15,6 @@ body {
   /* font-family: "Montserrat", sans-serif; */
 
   color: #D1F4ED;
-  background: url(assets/images/background-tile.png) #060D29;
+  background: #060D29;
+  cursor: none;
 }
