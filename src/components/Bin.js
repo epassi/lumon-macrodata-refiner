@@ -65,8 +65,9 @@ const BoxLabel = ({ label }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        border: "1px solid #D1F4ED",
+        border: "1.5px solid #D1F4ED",
         backgroundColor: "#060D29",
+        fontWeight: 500,
       }}
     >
       {label}
@@ -85,7 +86,7 @@ const BoxOpening = ({ open }) => {
         left: 0,
         width: "100%",
         height: "0.9rem",
-        border: "1px solid #D1F4ED",
+        border: "1.5px solid #D1F4ED",
         backgroundColor: "#060D29",
       }}
       animate={{
@@ -120,12 +121,6 @@ const BoxFlap = ({ side, width, open }) => {
             `L${x} ${-y + height}` + // bottom right
             `L0 ${height}` + // bottom left
             `L0 ${(1 - progress) * height}` // top left
-        );
-
-        console.log(
-          `progress = ${progress.toFixed(2)}, 𝝧 = ${angle.toFixed(
-            2
-          )}rad, x = ${x.toFixed(2)}, y = ${y.toFixed(2)}`
         );
 
         angle += open ? increment : -increment;
@@ -166,7 +161,7 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" fill="#060D29" />
+      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={1.5} />
     </svg>
   );
 };
@@ -177,7 +172,7 @@ const ProgressBar = () => {
       style={{
         flex: "1 0 auto",
         padding: "0.2rem",
-        border: "1px solid #D1F4ED",
+        border: "1.5px solid #D1F4ED",
       }}
     >
       0%

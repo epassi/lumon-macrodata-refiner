@@ -4,6 +4,7 @@ const Footer = () => {
       style={{
         flex: "0 0 4vh",
         fontSize: "1.5vw",
+        fontWeight: 500,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

@@ -46,7 +46,7 @@ const BinShelf = ({
     <div
       ref={rootElRef}
       style={{
-        flex: "0 0 11vh",
+        flex: "0 0 10vh",
         display: "flex",
         padding: "0.4rem 5vw",
         justifyContent: "space-between",
