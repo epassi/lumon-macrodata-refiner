@@ -199,16 +199,17 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
         <span
-          style={{ fontWeight: 600, fontSize: "1.5vw", width: "30%", color }}
+          style={{ fontWeight: 600, fontSize: "1.5vw", width: "25%", color }}
         >
           {label}
         </span>
         <div
           style={{
             position: "relative",
-            width: "70%",
-            height: "1.2rem",
+            width: "75%",
+            height: "1.5rem",
             border: `1.5px solid ${color}`,
+            overflow: "hidden",
           }}
         >
           <div
@@ -228,8 +229,8 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
 
   useEffect(() => {
     if (open) {
-      animate(height, "13.5rem", { delay: 2.5, duration: 0.3 });
-      animate(y, "-13.5rem", {
+      animate(height, "15rem", { delay: 2.5, duration: 0.3 });
+      animate(y, "-15rem", {
         delay: 2.5,
         duration: 0.3,
         onComplete: () => {
@@ -255,22 +256,14 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
         y,
         overflow: "hidden",
       }}
-      // animate={{
-      //   y: open ? "-13.5rem" : 0,
-      //   height: open ? "13.5rem" : 0,
-      // }}
-      // transition={{
-      //   delay: 2,
-      //   duration: 0.5,
-      // }}
     >
       <div
         style={{
           boxSizing: "border-box",
           width: "100%",
-          height: "13.5rem",
+          height: "15rem",
           border: "1.5px solid #D1F4ED",
-          padding: "0.3rem",
+          padding: "0.5rem",
           background: "#060D29",
         }}
       >
@@ -295,9 +288,9 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           }}
         >
           <CategoryMeter label="WO" color="#77DB70" progress={wo / max.wo} />
-          <CategoryMeter label="FC" color="#E8D363" progress={fc / max.fc} />
-          <CategoryMeter label="DR" color="#FB96DF" progress={dr / max.dr} />
-          <CategoryMeter label="MA" color="#3050F5" progress={ma / max.ma} />
+          <CategoryMeter label="FC" color="#F1EB5A" progress={fc / max.fc} />
+          <CategoryMeter label="DR" color="#FE7BD9" progress={dr / max.dr} />
+          <CategoryMeter label="MA" color="#1A3DF5" progress={ma / max.ma} />
         </div>
       </div>
     </motion.div>
