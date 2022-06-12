@@ -186,7 +186,7 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={1.5} />
+      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={2} />
     </svg>
   );
 };
@@ -262,7 +262,9 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           boxSizing: "border-box",
           width: "100%",
           height: "15rem",
-          border: "1.5px solid #D1F4ED",
+          borderTop: "1.5px solid #D1F4ED",
+          borderLeft: "1.5px solid #D1F4ED",
+          borderRight: "1.5px solid #D1F4ED",
           padding: "0.5rem",
           background: "#060D29",
         }}
