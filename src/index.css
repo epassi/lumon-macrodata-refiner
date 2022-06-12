@@ -1,4 +1,3 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"); */
 /* @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap"); */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
@@ -9,8 +8,6 @@
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: none; */
   overflow: hidden;
   cursor: none;
 }

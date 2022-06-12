@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import lumonLogo from "../assets/images/lumon-logo.svg";
 
-const Header = () => {
+const Header = ({ progress }) => {
   return (
     <header
       style={{
@@ -10,7 +10,7 @@ const Header = () => {
         alignItems: "center",
       }}
     >
-      <TitleBlock />
+      <TitleBlock progress={progress} />
       <LumonLogo />
     </header>
   );
@@ -64,7 +64,7 @@ const TitleBlock = ({ filename, progress }) => {
           textShadow,
         }}
       >
-        19% Complete
+        {Math.round(progress * 100)}% Complete
       </p>
     </div>
   );

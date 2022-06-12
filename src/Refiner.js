@@ -10,6 +10,7 @@ import { useViewControls, useKeyPress, randomInt } from "./util";
 
 const Refiner = () => {
   const { pan, zoom } = useViewControls();
+  const [progress, setProgress] = useState(0);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
   const [binMaxes] = useState([
@@ -69,6 +70,18 @@ const Refiner = () => {
     const binTotalsCopy = [...binTotals];
     binTotalsCopy[binIndex][type] += 1;
     setBinTotals(binTotalsCopy);
+
+    const total = binTotalsCopy.reduce(
+      (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
+      0
+    );
+
+    const max = binMaxes.reduce(
+      (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
+      0
+    );
+
+    setProgress(total / max);
   };
 
   return (
@@ -80,7 +93,7 @@ const Refiner = () => {
       }}
       onMouseMove={handleMouseMove}
     >
-      <Header />
+      <Header progress={progress} />
       <Divider weight="double" />
       <DigitMatrix
         squareRoot={20}
