@@ -181,6 +181,8 @@ const ProgressBar = ({ total, max }) => {
   useEffect(() => {
     // Animate the number labels.
     animate(progress, total / max, {
+      duration: 0.5,
+      ease: "linear",
       onUpdate: () => {
         lightLabelRef.current.textContent = `${Math.round(
           progress.get() * 100
@@ -213,6 +215,7 @@ const ProgressBar = ({ total, max }) => {
           background: "#D1F4ED",
         }}
         animate={{ width: `${(total / max) * 100}%` }}
+        transition={{ duration: 0.5, ease: "linear" }}
       >
         <span ref={darkLabelRef} style={{ display: "block", margin: "0.2rem" }}>
           0%
