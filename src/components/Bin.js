@@ -33,13 +33,22 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
         gap: "0.4rem",
       }}
     >
-      <BoxRect width={width} label={label} open={open} />
+      <BoxRect
+        width={width}
+        label={label}
+        wo={wo}
+        fc={fc}
+        dr={dr}
+        ma={ma}
+        max={max}
+        open={open}
+      />
       <ProgressBar total={total} max={max.wo + max.fc + max.dr + max.ma} />
     </div>
   );
 });
 
-const BoxRect = ({ width, label, open }) => {
+const BoxRect = ({ width, label, wo, fc, dr, ma, max, open }) => {
   return (
     <div
       style={{
@@ -52,6 +61,15 @@ const BoxRect = ({ width, label, open }) => {
       <BoxOpening open={open} />
       <BoxFlap side="left" width={width} open={open} />
       <BoxFlap side="right" width={width} open={open} />
+      <BoxPopup
+        label={label}
+        wo={wo}
+        fc={fc}
+        dr={dr}
+        ma={ma}
+        max={max}
+        open={open}
+      />
     </div>
   );
 };
@@ -62,7 +80,7 @@ const BoxLabel = ({ label }) => {
       style={{
         boxSizing: "border-box",
         position: "absolute",
-        zIndex: 1,
+        zIndex: 400,
         top: 0,
         left: 0,
         width: "100%",
@@ -155,6 +173,7 @@ const BoxFlap = ({ side, width, open }) => {
     <svg
       style={{
         position: "absolute",
+        zIndex: 200,
         overflow: "visible",
         transform:
           side === "left"
@@ -168,6 +187,98 @@ const BoxFlap = ({ side, width, open }) => {
     >
       <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={1.5} />
     </svg>
+  );
+};
+
+const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
+  const CategoryMeter = ({ label, color, progress }) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span
+          style={{ fontWeight: 600, fontSize: "1.5vw", width: "30%", color }}
+        >
+          {label}
+        </span>
+        <div
+          style={{
+            position: "relative",
+            width: "70%",
+            height: "1.2rem",
+            border: `1.5px solid ${color}`,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: `${progress * 100}%`,
+              height: "100%",
+              background: color,
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <motion.div
+      style={{
+        boxSizing: "border-box",
+        position: "absolute",
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        width: "100%",
+        overflow: "hidden",
+      }}
+      animate={{
+        y: open ? "-13.5rem" : 0,
+        height: open ? "13.5rem" : 0,
+      }}
+      transition={{
+        // delay: 2,
+        duration: 0.5,
+      }}
+    >
+      <div
+        style={{
+          boxSizing: "border-box",
+          width: "100%",
+          height: "13.5rem",
+          border: "1.5px solid #D1F4ED",
+          padding: "0.3rem",
+          background: "#060D29",
+        }}
+      >
+        <p
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.2rem",
+            fontWeight: 600,
+            border: "1.5px solid #D1F4ED",
+          }}
+        >
+          {label}
+        </p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            margin: "1rem 0",
+          }}
+        >
+          <CategoryMeter label="WO" color="#77DB70" progress={wo / max.wo} />
+          <CategoryMeter label="FC" color="#E8D363" progress={fc / max.fc} />
+          <CategoryMeter label="DR" color="#FB96DF" progress={dr / max.dr} />
+          <CategoryMeter label="MA" color="#3050F5" progress={ma / max.ma} />
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
