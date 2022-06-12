@@ -1,13 +1,11 @@
 import { useState, forwardRef, useEffect, useCallback, useRef } from "react";
 import { animate, motion, useMotionValue } from "framer-motion";
 import useSize from "@react-hook/size";
-import { randomInt } from "../util";
 
-const Bin = forwardRef(({ label, wo, fc, dr, ma, active }, rootElRef) => {
+const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
   const [open, setOpen] = useState(false);
   const [width] = useSize(rootElRef);
   const [total, setTotal] = useState(0);
-  const [max] = useState(randomInt(80, 200));
 
   useEffect(() => {
     setTotal(wo + fc + dr + ma);
@@ -36,7 +34,7 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, active }, rootElRef) => {
       }}
     >
       <BoxRect width={width} label={label} open={open} />
-      <ProgressBar total={total} max={max} />
+      <ProgressBar total={total} max={max.wo + max.fc + max.dr + max.ma} />
     </div>
   );
 });

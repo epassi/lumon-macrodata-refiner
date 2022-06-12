@@ -6,12 +6,44 @@ import DigitMatrix from "./components/DigitMatrix";
 import Divider from "./components/Divider";
 import Screen from "./components/Screen";
 import Cursor from "./components/Cursor";
-import { useViewControls, useKeyPress } from "./util";
+import { useViewControls, useKeyPress, randomInt } from "./util";
 
 const Refiner = () => {
   const { pan, zoom } = useViewControls();
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
+  const [binMaxes] = useState([
+    {
+      wo: randomInt(24, 64),
+      fc: randomInt(24, 64),
+      dr: randomInt(24, 64),
+      ma: randomInt(24, 64),
+    },
+    {
+      wo: randomInt(24, 64),
+      fc: randomInt(24, 64),
+      dr: randomInt(24, 64),
+      ma: randomInt(24, 64),
+    },
+    {
+      wo: randomInt(24, 64),
+      fc: randomInt(24, 64),
+      dr: randomInt(24, 64),
+      ma: randomInt(24, 64),
+    },
+    {
+      wo: randomInt(24, 64),
+      fc: randomInt(24, 64),
+      dr: randomInt(24, 64),
+      ma: randomInt(24, 64),
+    },
+    {
+      wo: randomInt(24, 64),
+      fc: randomInt(24, 64),
+      dr: randomInt(24, 64),
+      ma: randomInt(24, 64),
+    },
+  ]);
   const [binTotals, setBinTotals] = useState([
     { wo: 0, fc: 0, dr: 0, ma: 0 },
     { wo: 0, fc: 0, dr: 0, ma: 0 },
@@ -64,6 +96,7 @@ const Refiner = () => {
       />
       <Divider weight="double" />
       <BinShelf
+        binMaxes={binMaxes}
         binTotals={binTotals}
         onBinPositionChange={handleBinPositionChange}
         bin01={bin01}
