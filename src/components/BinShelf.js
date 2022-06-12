@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 const BinShelf = ({
   onBinPositionChange,
+  binTotals,
   bin01,
   bin02,
   bin03,
@@ -53,11 +54,11 @@ const BinShelf = ({
         alignItems: "stretch",
       }}
     >
-      <Bin ref={binRef01} label="01" active={bin01} />
-      <Bin ref={binRef02} label="02" active={bin02} />
-      <Bin ref={binRef03} label="03" active={bin03} />
-      <Bin ref={binRef04} label="04" active={bin04} />
-      <Bin ref={binRef05} label="05" active={bin05} />
+      <Bin ref={binRef01} label="01" {...binTotals[0]} active={bin01} />
+      <Bin ref={binRef02} label="02" {...binTotals[1]} active={bin02} />
+      <Bin ref={binRef03} label="03" {...binTotals[2]} active={bin03} />
+      <Bin ref={binRef04} label="04" {...binTotals[3]} active={bin04} />
+      <Bin ref={binRef05} label="05" {...binTotals[4]} active={bin05} />
     </div>
   );
 };

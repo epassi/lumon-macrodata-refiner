@@ -12,6 +12,13 @@ const Refiner = () => {
   const { pan, zoom } = useViewControls();
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
+  const [binTotals, setBinTotals] = useState([
+    { wo: 0, fc: 0, dr: 0, ma: 0 },
+    { wo: 0, fc: 0, dr: 0, ma: 0 },
+    { wo: 0, fc: 0, dr: 0, ma: 0 },
+    { wo: 0, fc: 0, dr: 0, ma: 0 },
+    { wo: 0, fc: 0, dr: 0, ma: 0 },
+  ]);
   const bin01 = useKeyPress("1");
   const bin02 = useKeyPress("2");
   const bin03 = useKeyPress("3");
@@ -24,6 +31,12 @@ const Refiner = () => {
 
   const handleMouseMove = ({ pageX, pageY }) => {
     setCursor({ x: pageX, y: pageY });
+  };
+
+  const handleBin = ({ binIndex, type }) => {
+    const binTotalsCopy = [...binTotals];
+    binTotalsCopy[binIndex][type] += 1;
+    setBinTotals(binTotalsCopy);
   };
 
   return (
@@ -47,9 +60,11 @@ const Refiner = () => {
         bin03={bin03}
         bin04={bin04}
         bin05={bin05}
+        onBin={handleBin}
       />
       <Divider weight="double" />
       <BinShelf
+        binTotals={binTotals}
         onBinPositionChange={handleBinPositionChange}
         bin01={bin01}
         bin02={bin02}

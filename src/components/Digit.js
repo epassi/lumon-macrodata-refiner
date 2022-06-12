@@ -45,7 +45,7 @@ const Digit = ({
         delay: 1,
         duration,
         onComplete: () => {
-          onBinEnd({ column, row });
+          onBinEnd({ binIndex, column, row });
           x.set(0);
           y.set(0);
           opacity.set(0);

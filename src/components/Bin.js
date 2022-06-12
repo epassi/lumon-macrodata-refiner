@@ -1,10 +1,17 @@
 import { useState, forwardRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import useSize from "@react-hook/size";
+import { randomInt } from "../util";
 
-const Bin = forwardRef(({ label, active }, rootElRef) => {
+const Bin = forwardRef(({ label, wo, fc, dr, ma, active }, rootElRef) => {
   const [open, setOpen] = useState(false);
   const [width] = useSize(rootElRef);
+  const [total, setTotal] = useState(0);
+  const [max] = useState(randomInt(80, 200));
+
+  useEffect(() => {
+    setTotal(wo + fc + dr + ma);
+  }, [wo, fc, dr, ma]);
 
   useEffect(() => {
     // Hack: using timer to automatically close the bin after a few seconds.
@@ -29,7 +36,7 @@ const Bin = forwardRef(({ label, active }, rootElRef) => {
       }}
     >
       <BoxRect width={width} label={label} open={open} />
-      <ProgressBar />
+      <ProgressBar total={total} max={max} />
     </div>
   );
 });
@@ -166,16 +173,35 @@ const BoxFlap = ({ side, width, open }) => {
   );
 };
 
-const ProgressBar = () => {
+const ProgressBar = ({ total, max }) => {
   return (
     <div
       style={{
+        position: "relative",
         flex: "1 0 auto",
         padding: "0.2rem",
         border: "1.5px solid #D1F4ED",
       }}
     >
-      0%
+      <motion.div
+        style={{
+          boxSizing: "border-box",
+          position: "absolute",
+          zIndex: 100,
+          top: 0,
+          left: 0,
+          height: "100%",
+          overflow: "hidden",
+          color: "#060D29",
+          background: "#D1F4ED",
+        }}
+        animate={{ width: `${(total / max) * 100}%` }}
+      >
+        <div style={{ margin: "0.2rem 0 0 0.2rem" }}>
+          {Math.round((total / max) * 100)}%
+        </div>
+      </motion.div>
+      {Math.round((total / max) * 100)}%
     </div>
   );
 };

@@ -10,6 +10,7 @@ const DigitMatrix = ({
   zoom,
   binPositions,
   onMatrixFoldChange,
+  onBin,
   bin01,
   bin02,
   bin03,
@@ -25,7 +26,9 @@ const DigitMatrix = ({
   const [selectionEnabled, setSelectionEnabled] = useState(false);
   const [matrixFoldPosition, setMatrixFoldPosition] = useState(0);
 
-  const handleBinEnd = ({ column, row }) => {
+  const handleBinEnd = ({ binIndex, column, row }) => {
+    onBin({ binIndex, type: matrixValues[row][column].type });
+
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
     matrixValuesCopy[row][column].selected = false;
 
@@ -135,6 +138,7 @@ const DigitMatrix = ({
       for (let x = 0; x < squareRoot; x++) {
         randomValues[y][x] = {
           value: randomInt(0, 9),
+          type: ["wo", "fc", "dr", "ma"].at(randomInt(0, 3)),
           enlargement: 0,
           selected: false,
         };
