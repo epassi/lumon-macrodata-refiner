@@ -26,7 +26,7 @@ const TitleBlock = ({ filename, progress }) => {
   };
 
   useEffect(() => {
-    const radius = 0.15;
+    const radius = 0.22;
 
     let shadow = textShadow;
     for (let i = 0; i < 2; i += 0.125) {
@@ -57,9 +57,9 @@ const TitleBlock = ({ filename, progress }) => {
       <p
         style={{
           marginRight: "12vw",
-          fontSize: "5vh",
-          fontWeight: 500,
-          letterSpacing: "-0.05rem",
+          fontFamily: `"Helvetica", "Arial", sans-serif`,
+          fontSize: "5.5vh",
+          fontWeight: 600,
           color: "#060D29",
           textShadow,
         }}

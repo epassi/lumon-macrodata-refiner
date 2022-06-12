@@ -31,7 +31,7 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, active }, rootElRef) => {
         width: "16vw",
         display: "flex",
         flexDirection: "column",
-        fontSize: "1.5vw",
+        fontSize: "1.8vw",
         gap: "0.4rem",
       }}
     >
@@ -74,7 +74,7 @@ const BoxLabel = ({ label }) => {
         alignItems: "center",
         border: "1.5px solid #D1F4ED",
         backgroundColor: "#060D29",
-        fontWeight: 500,
+        fontWeight: 600,
       }}
     >
       {label}
