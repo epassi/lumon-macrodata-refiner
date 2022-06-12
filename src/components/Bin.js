@@ -1,5 +1,5 @@
-import { useState, forwardRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, forwardRef, useEffect, useCallback, useRef } from "react";
+import { animate, motion, useMotionValue } from "framer-motion";
 import useSize from "@react-hook/size";
 import { randomInt } from "../util";
 
@@ -174,12 +174,29 @@ const BoxFlap = ({ side, width, open }) => {
 };
 
 const ProgressBar = ({ total, max }) => {
+  const progress = useMotionValue(0);
+  const darkLabelRef = useRef(null);
+  const lightLabelRef = useRef(null);
+
+  useEffect(() => {
+    // Animate the number labels.
+    animate(progress, total / max, {
+      onUpdate: () => {
+        lightLabelRef.current.textContent = `${Math.round(
+          progress.get() * 100
+        )}%`;
+        darkLabelRef.current.textContent = `${Math.round(
+          progress.get() * 100
+        )}%`;
+      },
+    });
+  }, [progress, total, max]);
+
   return (
     <div
       style={{
         position: "relative",
         flex: "1 0 auto",
-        padding: "0.2rem",
         border: "1.5px solid #D1F4ED",
       }}
     >
@@ -197,11 +214,14 @@ const ProgressBar = ({ total, max }) => {
         }}
         animate={{ width: `${(total / max) * 100}%` }}
       >
-        <div style={{ margin: "0.2rem 0 0 0.2rem" }}>
-          {Math.round((total / max) * 100)}%
-        </div>
+        <span ref={darkLabelRef} style={{ display: "block", margin: "0.2rem" }}>
+          0%
+        </span>
       </motion.div>
-      {Math.round((total / max) * 100)}%
+
+      <span ref={lightLabelRef} style={{ display: "block", margin: "0.2rem" }}>
+        0%
+      </span>
     </div>
   );
 };
