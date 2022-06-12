@@ -13,12 +13,13 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
 
   useEffect(() => {
     // Hack: using timer to automatically close the bin after a few seconds.
+    // Choreogrpahed to immediately follow the category popup closure.
     // Should be callback-based but couldn't get it to work right.
     if (active) {
       setOpen(true);
       setTimeout(() => {
         setOpen(false);
-      }, 3000);
+      }, 4700);
     }
   }, [active]);
 
@@ -191,6 +192,9 @@ const BoxFlap = ({ side, width, open }) => {
 };
 
 const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
+  const y = useMotionValue(0);
+  const height = useMotionValue(0);
+
   const CategoryMeter = ({ label, color, progress }) => {
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -222,6 +226,22 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
     );
   };
 
+  useEffect(() => {
+    if (open) {
+      animate(height, "13.5rem", { delay: 2.5, duration: 0.3 });
+      animate(y, "-13.5rem", {
+        delay: 2.5,
+        duration: 0.3,
+        onComplete: () => {
+          setTimeout(() => {
+            animate(height, 0, { delay: 0, duration: 0.3 });
+            animate(y, 0, { delay: 0, duration: 0.3 });
+          }, 1500);
+        },
+      });
+    }
+  }, [open, height, y]);
+
   return (
     <motion.div
       style={{
@@ -231,16 +251,18 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
         top: 0,
         left: 0,
         width: "100%",
+        height,
+        y,
         overflow: "hidden",
       }}
-      animate={{
-        y: open ? "-13.5rem" : 0,
-        height: open ? "13.5rem" : 0,
-      }}
-      transition={{
-        // delay: 2,
-        duration: 0.5,
-      }}
+      // animate={{
+      //   y: open ? "-13.5rem" : 0,
+      //   height: open ? "13.5rem" : 0,
+      // }}
+      // transition={{
+      //   delay: 2,
+      //   duration: 0.5,
+      // }}
     >
       <div
         style={{
