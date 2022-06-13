@@ -19,7 +19,7 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
       setOpen(true);
       setTimeout(() => {
         setOpen(false);
-      }, 4700);
+      }, 6000);
     }
   }, [active]);
 
@@ -229,15 +229,15 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
 
   useEffect(() => {
     if (open) {
-      animate(height, "15rem", { delay: 2.5, duration: 0.3 });
+      animate(height, "15rem", { delay: 2.5, duration: 0.5 });
       animate(y, "-15rem", {
         delay: 2.5,
-        duration: 0.3,
+        duration: 0.5,
         onComplete: () => {
           setTimeout(() => {
             animate(height, 0, { delay: 0, duration: 0.3 });
             animate(y, 0, { delay: 0, duration: 0.3 });
-          }, 1500);
+          }, 2500);
         },
       });
     }
@@ -326,6 +326,7 @@ const ProgressBar = ({ total, max }) => {
         position: "relative",
         flex: "1 0 auto",
         border: "1.5px solid #D1F4ED",
+        overflow: "hidden",
       }}
     >
       <motion.div
