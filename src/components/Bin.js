@@ -207,7 +207,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           style={{
             position: "relative",
             width: "75%",
-            height: "3.5vh",
+            height: "3.2vh",
             border: `1.5px solid ${color}`,
             overflow: "hidden",
           }}
