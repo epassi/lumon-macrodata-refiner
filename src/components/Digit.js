@@ -132,7 +132,7 @@ const Digit = ({
   useEffect(() => {
     wiggleElRef.current.style.setProperty(
       "--wiggle-range",
-      `${Math.random() * 16}px`
+      `${Math.random()}vw`
     );
     wiggleElRef.current.style.setProperty(
       "--wiggle-duration",
