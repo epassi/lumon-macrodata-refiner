@@ -45,7 +45,7 @@ const Digit = ({
         delay: 1,
         duration,
         onComplete: () => {
-          onBinEnd({ column, row });
+          onBinEnd({ binIndex, column, row });
           x.set(0);
           y.set(0);
           opacity.set(0);
@@ -66,9 +66,9 @@ const Digit = ({
   );
 
   useEffect(() => {
-    // Hack: adding 0.5s delay so that fade-in occurs after bin closes.
+    // Hack: adding 3s delay so that fade-in occurs after bin closes.
     // Should be callback-driven but couldn't get it to work right.
-    animate(opacity, 1, { duration: 2, delay: 0.5 + Math.random() });
+    animate(opacity, 1, { duration: 2, delay: 3 + Math.random() });
   }, [value, opacity]);
 
   useEffect(() => {

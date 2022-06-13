@@ -2,9 +2,9 @@ const Footer = () => {
   return (
     <footer
       style={{
-        flex: "0 0 4vh",
-        fontSize: "1.5vw",
-        fontWeight: 500,
+        flex: "0 0 4.5vh",
+        fontSize: "1.8vw",
+        fontWeight: 600,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

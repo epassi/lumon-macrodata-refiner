@@ -1,19 +1,25 @@
-import { useState, forwardRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, forwardRef, useEffect, useCallback, useRef } from "react";
+import { animate, motion, useMotionValue } from "framer-motion";
 import useSize from "@react-hook/size";
 
-const Bin = forwardRef(({ label, active }, rootElRef) => {
+const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
   const [open, setOpen] = useState(false);
   const [width] = useSize(rootElRef);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(wo + fc + dr + ma);
+  }, [wo, fc, dr, ma]);
 
   useEffect(() => {
     // Hack: using timer to automatically close the bin after a few seconds.
+    // Choreogrpahed to immediately follow the category popup closure.
     // Should be callback-based but couldn't get it to work right.
     if (active) {
       setOpen(true);
       setTimeout(() => {
         setOpen(false);
-      }, 3000);
+      }, 6000);
     }
   }, [active]);
 
@@ -24,17 +30,26 @@ const Bin = forwardRef(({ label, active }, rootElRef) => {
         width: "16vw",
         display: "flex",
         flexDirection: "column",
-        fontSize: "1.5vw",
+        fontSize: "1.8vw",
         gap: "0.4rem",
       }}
     >
-      <BoxRect width={width} label={label} open={open} />
-      <ProgressBar />
+      <BoxRect
+        width={width}
+        label={label}
+        wo={wo}
+        fc={fc}
+        dr={dr}
+        ma={ma}
+        max={max}
+        open={open}
+      />
+      <ProgressBar total={total} max={max.wo + max.fc + max.dr + max.ma} />
     </div>
   );
 });
 
-const BoxRect = ({ width, label, open }) => {
+const BoxRect = ({ width, label, wo, fc, dr, ma, max, open }) => {
   return (
     <div
       style={{
@@ -47,6 +62,15 @@ const BoxRect = ({ width, label, open }) => {
       <BoxOpening open={open} />
       <BoxFlap side="left" width={width} open={open} />
       <BoxFlap side="right" width={width} open={open} />
+      <BoxPopup
+        label={label}
+        wo={wo}
+        fc={fc}
+        dr={dr}
+        ma={ma}
+        max={max}
+        open={open}
+      />
     </div>
   );
 };
@@ -57,7 +81,7 @@ const BoxLabel = ({ label }) => {
       style={{
         boxSizing: "border-box",
         position: "absolute",
-        zIndex: 1,
+        zIndex: 400,
         top: 0,
         left: 0,
         width: "100%",
@@ -67,7 +91,7 @@ const BoxLabel = ({ label }) => {
         alignItems: "center",
         border: "1.5px solid #D1F4ED",
         backgroundColor: "#060D29",
-        fontWeight: 500,
+        fontWeight: 600,
       }}
     >
       {label}
@@ -150,6 +174,7 @@ const BoxFlap = ({ side, width, open }) => {
     <svg
       style={{
         position: "absolute",
+        zIndex: 200,
         overflow: "visible",
         transform:
           side === "left"
@@ -161,21 +186,172 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={1.5} />
+      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={2} />
     </svg>
   );
 };
 
-const ProgressBar = () => {
+const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
+  const y = useMotionValue(0);
+  const height = useMotionValue(0);
+
+  const CategoryMeter = ({ label, color, progress }) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span
+          style={{ fontWeight: 600, fontSize: "1.5vw", width: "25%", color }}
+        >
+          {label}
+        </span>
+        <div
+          style={{
+            position: "relative",
+            width: "75%",
+            height: "1.5rem",
+            border: `1.5px solid ${color}`,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: `${progress * 100}%`,
+              height: "100%",
+              background: color,
+            }}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (open) {
+      animate(height, "15rem", { delay: 2.5, duration: 0.5 });
+      animate(y, "-15rem", {
+        delay: 2.5,
+        duration: 0.5,
+        onComplete: () => {
+          setTimeout(() => {
+            animate(height, 0, { delay: 0, duration: 0.3 });
+            animate(y, 0, { delay: 0, duration: 0.3 });
+          }, 2500);
+        },
+      });
+    }
+  }, [open, height, y]);
+
+  return (
+    <motion.div
+      style={{
+        boxSizing: "border-box",
+        position: "absolute",
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        width: "100%",
+        height,
+        y,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          boxSizing: "border-box",
+          width: "100%",
+          height: "15rem",
+          borderTop: "1.5px solid #D1F4ED",
+          borderLeft: "1.5px solid #D1F4ED",
+          borderRight: "1.5px solid #D1F4ED",
+          padding: "0.5rem",
+          background: "#060D29",
+        }}
+      >
+        <p
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.2rem",
+            fontWeight: 600,
+            border: "1.5px solid #D1F4ED",
+          }}
+        >
+          {label}
+        </p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            margin: "1rem 0",
+          }}
+        >
+          <CategoryMeter label="WO" color="#77DB70" progress={wo / max.wo} />
+          <CategoryMeter label="FC" color="#F1EB5A" progress={fc / max.fc} />
+          <CategoryMeter label="DR" color="#FE7BD9" progress={dr / max.dr} />
+          <CategoryMeter label="MA" color="#1A3DF5" progress={ma / max.ma} />
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const ProgressBar = ({ total, max }) => {
+  const progress = useMotionValue(0);
+  const darkLabelRef = useRef(null);
+  const lightLabelRef = useRef(null);
+
+  useEffect(() => {
+    // Animate the number labels.
+    animate(progress, total / max, {
+      duration: 0.5,
+      ease: "linear",
+      onUpdate: () => {
+        lightLabelRef.current.textContent = `${Math.round(
+          progress.get() * 100
+        )}%`;
+        darkLabelRef.current.textContent = `${Math.round(
+          progress.get() * 100
+        )}%`;
+      },
+    });
+  }, [progress, total, max]);
+
   return (
     <div
       style={{
+        position: "relative",
         flex: "1 0 auto",
-        padding: "0.2rem",
         border: "1.5px solid #D1F4ED",
+        overflow: "hidden",
       }}
     >
-      0%
+      <motion.div
+        style={{
+          boxSizing: "border-box",
+          position: "absolute",
+          zIndex: 100,
+          top: 0,
+          left: 0,
+          height: "100%",
+          overflow: "hidden",
+          color: "#060D29",
+          background: "#D1F4ED",
+        }}
+        animate={{ width: `${(total / max) * 100}%` }}
+        transition={{ duration: 0.5, ease: "linear" }}
+      >
+        <span ref={darkLabelRef} style={{ display: "block", margin: "0.2rem" }}>
+          0%
+        </span>
+      </motion.div>
+
+      <span ref={lightLabelRef} style={{ display: "block", margin: "0.2rem" }}>
+        0%
+      </span>
     </div>
   );
 };
