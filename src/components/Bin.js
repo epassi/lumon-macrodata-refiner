@@ -207,7 +207,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           style={{
             position: "relative",
             width: "75%",
-            height: "1.5rem",
+            height: "3.5vh",
             border: `1.5px solid ${color}`,
             overflow: "hidden",
           }}
@@ -229,8 +229,8 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
 
   useEffect(() => {
     if (open) {
-      animate(height, "15rem", { delay: 2.5, duration: 0.5 });
-      animate(y, "-15rem", {
+      animate(height, "32vh", { delay: 2.5, duration: 0.5 });
+      animate(y, "-32vh", {
         delay: 2.5,
         duration: 0.5,
         onComplete: () => {
@@ -261,7 +261,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
         style={{
           boxSizing: "border-box",
           width: "100%",
-          height: "15rem",
+          height: "32vh",
           borderTop: "1.5px solid #D1F4ED",
           borderLeft: "1.5px solid #D1F4ED",
           borderRight: "1.5px solid #D1F4ED",
@@ -274,7 +274,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding: "0.2rem",
+            padding: "1vh",
             fontWeight: 600,
             border: "1.5px solid #D1F4ED",
           }}
@@ -285,7 +285,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
+            gap: "1.5vh",
             margin: "1rem 0",
           }}
         >
