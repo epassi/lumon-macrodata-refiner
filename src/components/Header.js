@@ -64,7 +64,7 @@ const TitleBlock = ({ filename, progress }) => {
           textShadow,
         }}
       >
-        {Math.round(progress * 100)}% Complete
+        {Math.floor(progress * 100)}% Complete
       </p>
     </div>
   );

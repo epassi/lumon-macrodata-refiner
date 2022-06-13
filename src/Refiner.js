@@ -68,20 +68,24 @@ const Refiner = () => {
 
   const handleBin = ({ binIndex, type }) => {
     const binTotalsCopy = [...binTotals];
-    binTotalsCopy[binIndex][type] += 1;
-    setBinTotals(binTotalsCopy);
 
-    const total = binTotalsCopy.reduce(
-      (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
-      0
-    );
+    // Add to the bin if type quota hasn't been met.
+    if (binTotalsCopy[binIndex][type] < binMaxes[binIndex][type]) {
+      binTotalsCopy[binIndex][type] += 1;
+      setBinTotals(binTotalsCopy);
 
-    const max = binMaxes.reduce(
-      (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
-      0
-    );
+      const total = binTotalsCopy.reduce(
+        (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
+        0
+      );
 
-    setProgress(total / max);
+      const max = binMaxes.reduce(
+        (aggregate, { wo, fc, dr, ma }) => aggregate + wo + fc + dr + ma,
+        0
+      );
+
+      setProgress(total / max);
+    }
   };
 
   return (

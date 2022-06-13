@@ -310,10 +310,10 @@ const ProgressBar = ({ total, max }) => {
       duration: 0.5,
       ease: "linear",
       onUpdate: () => {
-        lightLabelRef.current.textContent = `${Math.round(
+        lightLabelRef.current.textContent = `${Math.floor(
           progress.get() * 100
         )}%`;
-        darkLabelRef.current.textContent = `${Math.round(
+        darkLabelRef.current.textContent = `${Math.floor(
           progress.get() * 100
         )}%`;
       },
