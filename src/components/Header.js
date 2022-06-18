@@ -60,10 +60,11 @@ const Gradient = ({ steps, maxWeight, progress }) => {
     >
       {pathIndexes.map((i) => (
         <path
+          key={i}
           d={`M${i * 20 + 1} 0V100`}
-          stroke-width={(i / 60) * maxWeight}
+          strokeWidth={(i / 60) * maxWeight}
           stroke={color.on}
-          stroke-opacity={i < progress * steps ? i / 30 : 0}
+          strokeOpacity={i < progress * steps ? i / 30 : 0}
         />
       ))}
     </svg>
