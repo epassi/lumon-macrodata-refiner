@@ -62,7 +62,7 @@ const Gradient = ({ steps, maxWeight, progress }) => {
         <path
           d={`M${i * 20 + 1} 0V100`}
           stroke-width={(i / 60) * maxWeight}
-          stroke="#D1F4ED"
+          stroke={color.on}
           stroke-opacity={i < progress * steps ? i / 30 : 0}
         />
       ))}
@@ -112,7 +112,7 @@ const LogoCompletionLockup = ({ progress }) => {
           fontFamily: `"Helvetica", "Arial", sans-serif`,
           fontSize: "5.5vh",
           fontWeight: 600,
-          color: "#060D29",
+          color: color.off,
           textShadow,
         }}
       >
