@@ -131,6 +131,7 @@ const DigitMatrix = ({
     onMatrixFoldChange,
   ]);
 
+  // Generate the initial set of digits
   useEffect(() => {
     const randomValues = new Array(squareRoot);
     for (let y = 0; y < squareRoot; y++) {
