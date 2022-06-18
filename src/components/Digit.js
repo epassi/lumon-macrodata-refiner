@@ -65,12 +65,14 @@ const Digit = ({
     ]
   );
 
+  // Respawn animation
   useEffect(() => {
     // Hack: adding 3s delay so that fade-in occurs after bin closes.
     // Should be callback-driven but couldn't get it to work right.
     animate(opacity, 1, { duration: 2, delay: 3 + Math.random() });
   }, [value, opacity]);
 
+  // Startup animation
   useEffect(() => {
     animate(opacity, 1, { duration: 2, delay: Math.random() });
   }, [opacity]);
