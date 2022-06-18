@@ -1,6 +1,6 @@
 import backgroundTile from "../assets/images/background-tile.png";
 
-const Screen = () => {
+const RetroMonitorScrim = () => {
   return (
     <div
       style={{
@@ -17,4 +17,4 @@ const Screen = () => {
   );
 };
 
-export default Screen;
+export default RetroMonitorScrim;
