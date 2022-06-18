@@ -10,6 +10,10 @@ const CompletionScreen = ({ open }) => {
 };
 
 const Window = ({ open }) => {
+  const handleClick = () => {
+    window.location.reload(false);
+  };
+
   return (
     <motion.div
       style={{
@@ -32,6 +36,7 @@ const Window = ({ open }) => {
         duration: 0.3,
         ease: "linear",
       }}
+      onClick={handleClick}
     >
       <div
         style={{
