@@ -32,7 +32,12 @@ const DigitMatrix = ({
     const matrixValuesCopy = matrixDeepCopy(matrixValues);
     matrixValuesCopy[row][column].selected = false;
 
+    // Respawn binned digit. New type and value.
+    // Value must be unique to trigger animation hook in Digit.
     const currentDigitValue = matrixValuesCopy[row][column].value;
+    matrixValuesCopy[row][column].type = ["wo", "fc", "dr", "ma"].at(
+      randomInt(0, 3)
+    );
     matrixValuesCopy[row][column].value = uniqueRandomInt({
       dontRepeat: currentDigitValue,
       min: 0,
