@@ -129,9 +129,14 @@ const BoxFlap = ({ side, width, open }) => {
   const [path, setPath] = useState("M0 0 L10 0 L10 14.4 L0 14.4 L0 0");
   const [radius, setRadius] = useState(200);
   const [viewBox, setViewBox] = useState("0 0 10 14.4");
+  const [visible, setVisible] = useState(false);
 
   const setFlap = useCallback(
     (open) => {
+      if (open) {
+        setVisible(true);
+      }
+
       let angle = open ? 0 : Math.PI * 0.75;
       const increment = (Math.PI * 0.75) / 20;
 
@@ -152,8 +157,12 @@ const BoxFlap = ({ side, width, open }) => {
 
         if (open && angle <= Math.PI * 0.75) {
           requestAnimationFrame(callback);
-        } else if (!open && angle >= 0) {
+        } else if (!open && angle > 0) {
           requestAnimationFrame(callback);
+        } else if (!open && angle <= 0) {
+          // Closing animation complete.
+          // Hide flaps so they don't animate while resizing window.
+          setVisible(false);
         }
       };
 
@@ -181,6 +190,7 @@ const BoxFlap = ({ side, width, open }) => {
           side === "left"
             ? `translateY(-${height}px)`
             : `translateY(-${height}px) scaleX(-1)`,
+        visibility: visible ? "visible" : "hidden",
       }}
       width={width}
       height={height} // 0.9rem to match BoxOpening height
