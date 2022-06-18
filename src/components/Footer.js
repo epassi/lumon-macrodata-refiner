@@ -1,4 +1,4 @@
-const Footer = () => {
+const Footer = ({ hexMin, hexMax }) => {
   return (
     <footer
       style={{
@@ -11,15 +11,16 @@ const Footer = () => {
         gap: "1.5vw",
       }}
     >
-      <span style={style.value}>0x000000</span>{" "}
+      <span style={style.value}>{hexMin}</span>{" "}
       <span style={style.colon}>:</span>{" "}
-      <span style={style.value}>0x000000</span>
+      <span style={style.value}>{hexMax}</span>
     </footer>
   );
 };
 
 const style = {
   value: {
+    letterSpacing: "0.05rem",
     transform: "translateY(-0.2rem)",
   },
   colon: {

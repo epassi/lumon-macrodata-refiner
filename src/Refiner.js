@@ -123,7 +123,7 @@ const Refiner = () => {
         bin05={bin05}
       />
       <Divider weight="single" />
-      <Footer />
+      <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" />
       <Screen />
       <Cursor x={cursor.x} y={cursor.y} />
     </div>
