@@ -5,7 +5,7 @@ const Screen = () => {
     <div
       style={{
         position: "absolute",
-        zIndex: 900,
+        zIndex: 1000,
         top: 0,
         left: 0,
         width: "100vw",

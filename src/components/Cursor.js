@@ -8,10 +8,9 @@ const Cursor = ({ x, y }) => {
       xmlns="http://www.w3.org/2000/svg"
       style={{
         position: "absolute",
-        zIndex: 1000,
+        zIndex: 900,
         left: 0,
         top: 0,
-        // width: "1.5vw",
         transform: `translate(${x}px, ${y}px)`,
         pointerEvents: "none",
       }}
@@ -27,30 +26,6 @@ const Cursor = ({ x, y }) => {
         fill="#D1F4ED"
       />
     </svg>
-
-    // <svg
-    //   style={{
-    //     position: "absolute",
-    //     zIndex: 1000,
-    //     left: 0,
-    //     top: 0,
-    //     // width: "1.5vw",
-    //     transform: `translate(${x}px, ${y}px)`,
-    //     pointerEvents: "none",
-    //   }}
-    //   width="26"
-    //   height="30"
-    //   viewBox="0 0 26 30"
-    //   fill="none"
-    //   xmlns="http://www.w3.org/2000/svg"
-    // >
-    //   <path
-    //     d="M3.27142 0.602885L2.68997 0.58417L0.722358 1.89791L0.516762 2.44212L7.32472 28.0681L7.76211 28.4376L10.0994 28.6528L10.5969 28.3694L14.4625 20.2284L23.7382 20.2117L24.211 19.8717L24.9683 17.6289L24.7984 17.0718L3.27142 0.602885ZM11.9585 17.5219L11.7744 17.7298L9.48211 22.5574L5.21538 6.49687L18.5796 16.721L13.3521 16.7304L13.0854 16.8081L11.9585 17.5219Z"
-    //     fill="#D1F4ED"
-    //     stroke="#060D29"
-    //     stroke-linejoin="bevel"
-    //   />
-    // </svg>
   );
 };
 
