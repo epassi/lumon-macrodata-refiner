@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { color } from "../util";
 import lumonLogo from "../assets/images/lumon-logo.svg";
 
 const Header = ({ filename, progress }) => {
@@ -29,9 +30,9 @@ const TitleBlock = ({ filename, progress }) => {
         alignItems: "center",
         margin: "0 5vw",
         padding: "0 0.5vw",
-        borderTop: "0.3vh solid #D1F4ED",
-        borderBottom: "0.3vh solid #D1F4ED",
-        borderLeft: "0.3vh solid #D1F4ED",
+        borderTop: `0.3vh solid ${color.on}`,
+        borderBottom: `0.3vh solid ${color.on}`,
+        borderLeft: `0.3vh solid ${color.on}`,
       }}
     >
       <h1 style={{ fontFamily: "Poppins", fontSize: "5.5vh" }}>{filename}</h1>
@@ -83,7 +84,7 @@ const LogoCompletionLockup = ({ progress }) => {
 
     let shadow = textShadow;
     for (let i = 0; i < 2; i += 0.125) {
-      shadow += `${shadowOffset(Math.PI * i, radius, "rem")} #D1F4ED,`;
+      shadow += `${shadowOffset(Math.PI * i, radius, "rem")} ${color.on},`;
     }
 
     // Remove trailing comma.

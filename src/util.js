@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 
+export const color = Object.freeze({
+  on: "#BEEEFF",
+  off: "#051021",
+  wo: "#77DB70",
+  fc: "#F1EB5A",
+  dr: "#FE7BD9",
+  ma: "#1A3DF5",
+});
+
 export const randomInt = (min, max) =>
   Math.round(Math.random() * (max - min) + min);
 

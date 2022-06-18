@@ -1,5 +1,6 @@
 import { useState, forwardRef, useEffect, useCallback, useRef } from "react";
 import { animate, motion, useMotionValue } from "framer-motion";
+import { color } from "../util";
 import useSize from "@react-hook/size";
 
 const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
@@ -89,8 +90,8 @@ const BoxLabel = ({ label }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        border: "1.5px solid #D1F4ED",
-        backgroundColor: "#051021",
+        border: `1.5px solid ${color.on}`,
+        backgroundColor: color.off,
         fontWeight: 600,
       }}
     >
@@ -110,8 +111,8 @@ const BoxOpening = ({ open }) => {
         left: 0,
         width: "100%",
         height: "0.9rem",
-        border: "1.5px solid #D1F4ED",
-        backgroundColor: "#060D29",
+        border: `1.5px solid ${color.on}`,
+        backgroundColor: color.off,
       }}
       animate={{
         y: open ? "-0.85rem" : 0,
@@ -186,7 +187,7 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" fill="#051021" strokeWidth={2} />
+      <path d={path} stroke={color.on} fill={color.off} strokeWidth={2} />
     </svg>
   );
 };
@@ -268,11 +269,11 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           boxSizing: "border-box",
           width: "100%",
           height: "32vh",
-          borderTop: "1.5px solid #D1F4ED",
-          borderLeft: "1.5px solid #D1F4ED",
-          borderRight: "1.5px solid #D1F4ED",
+          borderTop: `1.5px solid ${color.on}`,
+          borderLeft: `1.5px solid ${color.on}`,
+          borderRight: `1.5px solid ${color.on}`,
           padding: "0.5rem",
-          background: "#051021",
+          background: color.off,
         }}
       >
         <p
@@ -282,7 +283,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
             alignItems: "center",
             padding: "1vh",
             fontWeight: 600,
-            border: "1.5px solid #D1F4ED",
+            border: `1.5px solid ${color.on}`,
           }}
         >
           {label}
@@ -295,10 +296,10 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
             margin: "1rem 0",
           }}
         >
-          <CategoryMeter label="WO" color="#77DB70" progress={wo / max.wo} />
-          <CategoryMeter label="FC" color="#F1EB5A" progress={fc / max.fc} />
-          <CategoryMeter label="DR" color="#FE7BD9" progress={dr / max.dr} />
-          <CategoryMeter label="MA" color="#1A3DF5" progress={ma / max.ma} />
+          <CategoryMeter label="WO" color={color.wo} progress={wo / max.wo} />
+          <CategoryMeter label="FC" color={color.fc} progress={fc / max.fc} />
+          <CategoryMeter label="DR" color={color.dr} progress={dr / max.dr} />
+          <CategoryMeter label="MA" color={color.ma} progress={ma / max.ma} />
         </div>
       </div>
     </motion.div>
@@ -331,7 +332,7 @@ const ProgressBar = ({ total, max }) => {
       style={{
         position: "relative",
         flex: "1 0 auto",
-        border: "1.5px solid #D1F4ED",
+        border: `1.5px solid ${color.on}`,
         overflow: "hidden",
       }}
     >
@@ -344,8 +345,8 @@ const ProgressBar = ({ total, max }) => {
           left: 0,
           height: "100%",
           overflow: "hidden",
-          color: "#060D29",
-          background: "#D1F4ED",
+          color: color.off,
+          background: color.on,
         }}
         animate={{ width: `${(total / max) * 100}%` }}
         transition={{ duration: 0.5, ease: "linear" }}
