@@ -90,7 +90,7 @@ const BoxLabel = ({ label }) => {
         justifyContent: "center",
         alignItems: "center",
         border: "1.5px solid #D1F4ED",
-        backgroundColor: "#060D29",
+        backgroundColor: "#051021",
         fontWeight: 600,
       }}
     >
@@ -186,7 +186,7 @@ const BoxFlap = ({ side, width, open }) => {
       viewBox={viewBox}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d={path} stroke="#D1F4ED" fill="#060D29" strokeWidth={2} />
+      <path d={path} stroke="#D1F4ED" fill="#051021" strokeWidth={2} />
     </svg>
   );
 };
@@ -199,7 +199,13 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
     return (
       <div style={{ display: "flex", alignItems: "center" }}>
         <span
-          style={{ fontWeight: 600, fontSize: "1.5vw", width: "25%", color }}
+          style={{
+            fontFamily: "Montserrat",
+            fontWeight: 600,
+            fontSize: "1.5vw",
+            width: "25%",
+            color,
+          }}
         >
           {label}
         </span>
@@ -266,7 +272,7 @@ const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
           borderLeft: "1.5px solid #D1F4ED",
           borderRight: "1.5px solid #D1F4ED",
           padding: "0.5rem",
-          background: "#060D29",
+          background: "#051021",
         }}
       >
         <p
