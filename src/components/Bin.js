@@ -14,7 +14,7 @@ const Bin = forwardRef(({ label, wo, fc, dr, ma, max, active }, rootElRef) => {
 
   useEffect(() => {
     // Hack: using timer to automatically close the bin after a few seconds.
-    // Choreogrpahed to immediately follow the category popup closure.
+    // Choreogrpahed to immediately follow the category sheet closure.
     // Should be callback-based but couldn't get it to work right.
     if (active) {
       setOpen(true);
@@ -63,7 +63,7 @@ const BoxRect = ({ width, label, wo, fc, dr, ma, max, open }) => {
       <BoxOpening open={open} />
       <BoxFlap side="left" width={width} open={open} />
       <BoxFlap side="right" width={width} open={open} />
-      <BoxPopup
+      <BoxSheet
         label={label}
         wo={wo}
         fc={fc}
@@ -192,7 +192,7 @@ const BoxFlap = ({ side, width, open }) => {
   );
 };
 
-const BoxPopup = ({ label, wo, fc, dr, ma, max, open }) => {
+const BoxSheet = ({ label, wo, fc, dr, ma, max, open }) => {
   const y = useMotionValue(0);
   const height = useMotionValue(0);
 
