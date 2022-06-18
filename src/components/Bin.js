@@ -348,6 +348,7 @@ const ProgressBar = ({ total, max }) => {
           color: color.off,
           background: color.on,
         }}
+        initial={{ width: 0 }}
         animate={{ width: `${(total / max) * 100}%` }}
         transition={{ duration: 0.5, ease: "linear" }}
       >
