@@ -3,8 +3,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BinShelf from "./components/BinShelf";
 import DigitMatrix from "./components/DigitMatrix";
+import CompletionScreen from "./components/CompletionScreen";
 import Divider from "./components/Divider";
-import Screen from "./components/Screen";
+import RetroMonitorScrim from "./components/RetroMonitorScrim";
 import Cursor from "./components/Cursor";
 import { useViewControls, useKeyPress, randomInt } from "./util";
 
@@ -124,7 +125,8 @@ const Refiner = () => {
       />
       <Divider weight="single" />
       <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" />
-      <Screen />
+      <CompletionScreen open={progress === 1} />
+      <RetroMonitorScrim />
       <Cursor x={cursor.x} y={cursor.y} />
     </div>
   );
