@@ -97,7 +97,7 @@ const Refiner = () => {
       }}
       onMouseMove={handleMouseMove}
     >
-      <Header progress={progress} />
+      <Header filename="Dranesville" progress={progress} />
       <Divider weight="double" />
       <DigitMatrix
         squareRoot={20}
