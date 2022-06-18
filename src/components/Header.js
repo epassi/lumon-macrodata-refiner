@@ -34,13 +34,13 @@ const TitleBlock = ({ filename, progress }) => {
         borderLeft: "0.3vh solid #D1F4ED",
       }}
     >
-      <CompletionGradient steps={60} maxWeight={24} progress={progress} />
       <h1 style={{ fontFamily: "Poppins", fontSize: "5.5vh" }}>{filename}</h1>
+      <Gradient steps={60} maxWeight={24} progress={progress} />
     </div>
   );
 };
 
-const CompletionGradient = ({ steps, maxWeight, progress }) => {
+const Gradient = ({ steps, maxWeight, progress }) => {
   const [pathIndexes, setPathIndexes] = useState([]);
 
   useEffect(() => {
@@ -49,20 +49,20 @@ const CompletionGradient = ({ steps, maxWeight, progress }) => {
 
   return (
     <svg
-      style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }}
-      width="100%"
+      style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "95%" }}
+      width="95%" // Make it a little narrower so that 100% is optically where the logo starts
       height="100%"
       viewBox="0 0 1180 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
+      preserveAspectRatio="none" // Allow svg to stretch to absolute position
     >
       {pathIndexes.map((i) => (
         <path
           d={`M${i * 20 + 1} 0V100`}
           stroke-width={(i / 60) * maxWeight}
           stroke="#D1F4ED"
-          stroke-opacity={i / 30}
+          stroke-opacity={i < progress * steps ? i / 30 : 0}
         />
       ))}
     </svg>
