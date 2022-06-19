@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { color } from "../util";
+import { useEffect, useRef } from "react";
+import { color, delay } from "../util";
+import completionSound from "../assets/sounds/completion__hero_decorative-celebration-02.wav";
 
 const CompletionScreen = ({ open }) => {
   return (
@@ -10,9 +12,26 @@ const CompletionScreen = ({ open }) => {
 };
 
 const Window = ({ open }) => {
+  const completionSoundRef = useRef(null);
+
   const handleClick = () => {
     window.location.reload(false);
   };
+
+  const handleCompletion = async () => {
+    await delay(4000);
+    completionSoundRef.current.play();
+  };
+
+  useEffect(() => {
+    if (open) {
+      handleCompletion();
+    }
+  }, [open]);
+
+  useEffect(() => {
+    completionSoundRef.current = new Audio(completionSound);
+  }, []);
 
   return (
     <motion.div
