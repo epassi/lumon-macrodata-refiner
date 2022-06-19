@@ -11,6 +11,28 @@ import { useViewControls, useKeyPress, randomInt } from "./util";
 
 const Refiner = () => {
   const { pan, zoom } = useViewControls();
+  const [filename] = useState(
+    [
+      "Dranesville",
+      "Jesup",
+      "Kingsport",
+      "Labrador",
+      "Le Mars",
+      "Longbranch",
+      "Minsk",
+      "Moonbeam",
+      "Nanning",
+      "Narva",
+      "Ocula",
+      "Pacoima",
+      "Siena",
+      "Tumwater",
+    ].at(randomInt(0, 13))
+  );
+  const [fileRange] = useState({
+    min: randomInt(1400000, 1500000).toString(16).toUpperCase(),
+    max: randomInt(714000, 716000).toString(16).toUpperCase(),
+  });
   const [progress, setProgress] = useState(0);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [binPositions, setBinPositions] = useState([0, 0, 0, 0, 0]);
@@ -98,7 +120,7 @@ const Refiner = () => {
       }}
       onMouseMove={handleMouseMove}
     >
-      <Header filename="Dranesville" progress={progress} />
+      <Header filename={filename} progress={progress} />
       <Divider weight="double" />
       <DigitMatrix
         squareRoot={20}
@@ -124,7 +146,8 @@ const Refiner = () => {
         bin05={bin05}
       />
       <Divider weight="single" />
-      <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" />
+      {/* <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" /> */}
+      <Footer hexMin={"0x" + fileRange.min} hexMax={"0x" + fileRange.max} />
       <CompletionScreen open={progress === 1} />
       <RetroMonitorScrim />
       <Cursor x={cursor.x} y={cursor.y} />
