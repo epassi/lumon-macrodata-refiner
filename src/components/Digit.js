@@ -54,7 +54,7 @@ const Digit = ({
           opacity.set(0);
         },
       });
-      await delay(1000);
+      await delay(1100); // Play just a little after animation starts
       binningSoundRef.current.play();
     },
     [
@@ -153,6 +153,7 @@ const Digit = ({
 
     // Init sound.
     binningSoundRef.current = new Audio(binningSound);
+    binningSoundRef.current.volume = 0.5;
   }, []);
 
   return (
