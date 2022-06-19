@@ -1,5 +1,7 @@
 import { useState, forwardRef, useEffect, useCallback, useRef } from "react";
 import { animate, motion, useMotionValue } from "framer-motion";
+import binOpenSound from "../assets/sounds/bin-open__ui_unlock.wav";
+import binCloseSound from "../assets/sounds/bin-close__ui_lock.wav";
 import { color } from "../util";
 import useSize from "@react-hook/size";
 
@@ -130,13 +132,11 @@ const BoxFlap = ({ side, width, open }) => {
   const [radius, setRadius] = useState(200);
   const [viewBox, setViewBox] = useState("0 0 10 14.4");
   const [visible, setVisible] = useState(false);
+  const binOpenSoundRef = useRef(null);
+  const binCloseSoundRef = useRef(null);
 
   const setFlap = useCallback(
     (open) => {
-      if (open) {
-        setVisible(true);
-      }
-
       let angle = open ? 0 : Math.PI * 0.75;
       const increment = (Math.PI * 0.75) / 20;
 
@@ -178,7 +178,20 @@ const BoxFlap = ({ side, width, open }) => {
 
   useEffect(() => {
     setFlap(open);
-  }, [open, setFlap]);
+
+    // Manage flap visbility and sound.
+    if (open) {
+      setVisible(true);
+      binOpenSoundRef.current.play();
+    } else if (!open && visible) {
+      binCloseSoundRef.current.play();
+    }
+  }, [open, visible, setFlap]);
+
+  useEffect(() => {
+    binOpenSoundRef.current = new Audio(binOpenSound);
+    binCloseSoundRef.current = new Audio(binCloseSound);
+  }, []);
 
   return (
     <svg

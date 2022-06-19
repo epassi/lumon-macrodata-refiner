@@ -2,6 +2,7 @@ import Digit from "./Digit";
 import { matrixDeepCopy, randomInt, uniqueRandomInt } from "../util";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import startupSound from "../assets/sounds/startup__notification_ambient.wav";
 import useSize from "@react-hook/size";
 
 const DigitMatrix = ({
@@ -17,6 +18,7 @@ const DigitMatrix = ({
   bin04,
   bin05,
 }) => {
+  const startupSoundRef = useRef(null);
   const zoomPortElRef = useRef(null);
   const matrixElRef = useRef(null);
   const [matrixValues, setMatrixValues] = useState([]);
@@ -151,7 +153,11 @@ const DigitMatrix = ({
       }
     }
     setMatrixValues(randomValues);
-  }, [squareRoot]);
+
+    // Play sound
+    startupSoundRef.current = new Audio(startupSound);
+    startupSoundRef.current.play();
+  }, [squareRoot, startupSoundRef]);
 
   return (
     <div

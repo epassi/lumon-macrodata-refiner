@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, animate, useMotionValue } from "framer-motion";
+import binningSound from "../assets/sounds/binning__navigation_transition-right.wav";
 import "./Digit.css";
+import { delay } from "../util";
 
 const Digit = ({
   column,
@@ -25,12 +27,13 @@ const Digit = ({
   const rootElRef = useRef(null);
   const wiggleElRef = useRef(null);
   const [scale, setScale] = useState(1);
+  const binningSoundRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const opacity = useMotionValue(0);
 
   const moveToBin = useCallback(
-    (binIndex) => {
+    async (binIndex) => {
       const digitRect = rootElRef.current.getBoundingClientRect();
       const binTarget = {
         x: (binPositions[binIndex] - digitRect.x - digitRect.width / 2) / zoom,
@@ -51,6 +54,8 @@ const Digit = ({
           opacity.set(0);
         },
       });
+      await delay(1100); // Play just a little after animation starts
+      binningSoundRef.current.play();
     },
     [
       binPositions,
@@ -132,6 +137,7 @@ const Digit = ({
   }, [enlargement]);
 
   useEffect(() => {
+    // Set wiggle ranges.
     wiggleElRef.current.style.setProperty(
       "--wiggle-range",
       `${Math.random()}vw`
@@ -144,6 +150,10 @@ const Digit = ({
       "--wiggle-axis",
       Math.round(Math.random()) ? "wiggle-x" : "wiggle-y"
     );
+
+    // Init sound.
+    binningSoundRef.current = new Audio(binningSound);
+    binningSoundRef.current.volume = 0.5;
   }, []);
 
   return (
