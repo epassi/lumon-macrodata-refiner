@@ -9,6 +9,13 @@ export const color = Object.freeze({
   ma: "#1A3DF5",
 });
 
+export const delay = (milliseconds) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, milliseconds);
+  });
+
 export const randomInt = (min, max) =>
   Math.round(Math.random() * (max - min) + min);
 
@@ -28,35 +35,6 @@ export const matrixDeepCopy = (matrixValues) => {
   });
   return matrixCopy;
 };
-
-// export const useBoundingClientRect = (ref) => {
-//   const [x, setX] = useState(0);
-//   const [y, setY] = useState(0);
-//   const [width, setWidth] = useState(0);
-//   const [height, setHeight] = useState(0);
-
-//   const handleWindowChange = useCallback(() => {
-//     const rect = ref.current.getBoundingClientRect();
-//     setX(rect.x);
-//     setY(rect.y);
-//     setWidth(rect.width);
-//     setHeight(rect.height);
-//   }, [ref]);
-
-//   useEffect(() => {
-//     handleWindowChange();
-//     // WIP. Use ResizeObserver instead.
-//     window.addEventListener("resize", handleWindowChange);
-//     window.addEventListener("scroll", handleWindowChange);
-
-//     return () => {
-//       window.removeEventListener("resize", handleWindowChange);
-//       window.removeEventListener("scroll", handleWindowChange);
-//     };
-//   }, [handleWindowChange]);
-
-//   return { x, y, width, height };
-// };
 
 export const useViewControls = () => {
   const [zoom, setZoom] = useState(1);
@@ -128,42 +106,3 @@ export const useKeyPress = (targetKey) => {
 
   return keyPressed;
 };
-
-// export const useBinControls = () => {
-//   const [bin, setBin] = useState(0);
-
-//   const handleKeyDown = useCallback(
-//     (event) => {
-//       switch (event.key) {
-//         case "1":
-//           setBin(1);
-//           break;
-//         case "2":
-//           setBin(2);
-//           break;
-//         case "3":
-//           setBin(3);
-//           break;
-//         case "4":
-//           setBin(4);
-//           break;
-//         case "5":
-//           setBin(5);
-//           break;
-//         default:
-//           setBin(bin);
-//       }
-//     },
-//     [bin]
-//   );
-
-//   useEffect(() => {
-//     window.addEventListener("keydown", handleKeyDown);
-
-//     return () => {
-//       window.removeEventListener("keydown", handleKeyDown);
-//     };
-//   }, [handleKeyDown]);
-
-//   return bin;
-// };
