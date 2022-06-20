@@ -233,6 +233,7 @@ const DigitRow = ({
         <Digit
           key={i}
           value={valueItem.value}
+          type={valueItem.type}
           column={i}
           row={row}
           columnPortion={1 / values.length}

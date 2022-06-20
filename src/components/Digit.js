@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, animate, useMotionValue } from "framer-motion";
+import { useKeyPress, color } from "../util";
 import binningSound from "../assets/sounds/binning__navigation_transition-right.wav";
 import "./Digit.css";
 import { delay } from "../util";
@@ -8,6 +9,7 @@ const Digit = ({
   column,
   row,
   value,
+  type,
   columnPortion,
   enlargement,
   selected,
@@ -31,6 +33,7 @@ const Digit = ({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const opacity = useMotionValue(0);
+  const revealType = useKeyPress("c");
 
   const moveToBin = useCallback(
     async (binIndex) => {
@@ -186,6 +189,7 @@ const Digit = ({
         <motion.span
           style={{
             fontSize: "1.5vw",
+            color: revealType ? color[type] : "inherit",
           }}
           animate={{
             scale: selected ? 2.6 : scale,
