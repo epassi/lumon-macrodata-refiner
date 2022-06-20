@@ -75,19 +75,18 @@ const Gradient = ({ steps, maxWeight, progress }) => {
 
 const LogoCompletionLockup = ({ progress }) => {
   const [textShadow, setTextShadow] = useState("");
-  const shadowOffset = (angle, radius, unit) => {
-    const x = radius * Math.cos(angle);
-    const y = radius * Math.sin(angle);
-
-    return `${x}${unit} ${y}${unit}`;
-  };
+  const shadowOffset = (angle, radius) => ({
+    x: radius * Math.cos(angle),
+    y: radius * Math.sin(angle),
+  });
 
   useEffect(() => {
     const radius = 0.22;
 
     let shadow = textShadow;
     for (let i = 0; i < 2; i += 0.125) {
-      shadow += `${shadowOffset(Math.PI * i, radius, "rem")} ${color.on},`;
+      const { x, y } = shadowOffset(Math.PI * i, radius);
+      shadow += `${x}rem ${y}rem ${color.on},`;
     }
 
     // Remove trailing comma.
