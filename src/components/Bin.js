@@ -224,7 +224,7 @@ const BoxSheet = ({ label, wo, fc, dr, ma, max, open }) => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <span
           style={{
-            fontFamily: "Montserrat",
+            fontFamily: `"Montserrat", sans-serif`,
             fontWeight: 600,
             fontSize: "1.5vw",
             width: "25%",

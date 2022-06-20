@@ -35,7 +35,9 @@ const TitleBlock = ({ filename, progress }) => {
         borderLeft: `0.3vh solid ${color.on}`,
       }}
     >
-      <h1 style={{ fontFamily: "Poppins", fontSize: "5.5vh" }}>{filename}</h1>
+      <h1 style={{ fontFamily: `"Poppins", sans-serif`, fontSize: "5.5vh" }}>
+        {filename}
+      </h1>
       <Gradient steps={60} maxWeight={24} progress={progress} />
     </div>
   );
