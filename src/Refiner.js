@@ -30,8 +30,15 @@ const Refiner = () => {
     ].at(randomInt(0, 13))
   );
   const [fileRange] = useState({
-    min: randomInt(1400000, 1500000).toString(16).toUpperCase(),
-    max: randomInt(714000, 716000).toString(16).toUpperCase(),
+    min: randomInt(1400000, 1500000)
+      .toString(16)
+      .toUpperCase()
+      .padStart(6, "0"),
+    // prettier-ignore
+    max: randomInt(714000, 716000)
+      .toString(16)
+      .toUpperCase()
+      .padStart(6, "0"),
   });
   const [progress, setProgress] = useState(0);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
