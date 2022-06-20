@@ -14,10 +14,6 @@ const CompletionScreen = ({ open }) => {
 const Window = ({ open }) => {
   const completionSoundRef = useRef(null);
 
-  const handleClick = () => {
-    window.location.reload(false);
-  };
-
   const handleCompletion = async () => {
     await delay(4000);
     completionSoundRef.current.play();
@@ -55,7 +51,6 @@ const Window = ({ open }) => {
         duration: 0.3,
         ease: "linear",
       }}
-      onClick={handleClick}
     >
       <div
         style={{
@@ -76,6 +71,10 @@ const Window = ({ open }) => {
 };
 
 const Scrim = ({ children, open }) => {
+  const handleClick = () => {
+    window.location.reload(false);
+  };
+
   return (
     <div
       style={{
@@ -90,6 +89,7 @@ const Scrim = ({ children, open }) => {
         alignItems: "center",
         pointerEvents: open ? "auto" : "none",
       }}
+      onClick={handleClick}
     >
       {children}
     </div>
