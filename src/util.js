@@ -36,6 +36,19 @@ export const matrixDeepCopy = (matrixValues) => {
   return matrixCopy;
 };
 
+export const useSafari = () => {
+  const [isSafari, setIsSafari] = useState(false);
+
+  useEffect(() => {
+    setIsSafari(
+      navigator.userAgent.indexOf("Safari") > -1 &&
+        navigator.userAgent.indexOf("Chrome") <= -1
+    );
+  }, []);
+
+  return isSafari;
+};
+
 export const useViewControls = () => {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });

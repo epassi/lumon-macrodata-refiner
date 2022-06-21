@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BinShelf from "./components/BinShelf";
@@ -7,9 +7,11 @@ import CompletionScreen from "./components/CompletionScreen";
 import Divider from "./components/Divider";
 import RetroMonitorScrim from "./components/RetroMonitorScrim";
 import Cursor from "./components/Cursor";
-import { useViewControls, useKeyPress, randomInt } from "./util";
+import MessageScreen from "./components/MessageScreen";
+import { useSafari, useViewControls, useKeyPress, randomInt } from "./util";
 
 const Refiner = () => {
+  const safariDetected = useSafari();
   const { pan, zoom } = useViewControls();
   const [filename] = useState(
     [
@@ -127,37 +129,49 @@ const Refiner = () => {
       }}
       onMouseMove={handleMouseMove}
     >
-      <Header filename={filename} progress={progress} />
-      <Divider weight="double" />
-      <DigitMatrix
-        squareRoot={20}
-        pan={pan}
-        zoom={zoom}
-        binPositions={binPositions}
-        bin01={bin01}
-        bin02={bin02}
-        bin03={bin03}
-        bin04={bin04}
-        bin05={bin05}
-        onBin={handleBin}
-      />
-      <Divider weight="double" />
-      <BinShelf
-        binMaxes={binMaxes}
-        binTotals={binTotals}
-        onBinPositionChange={handleBinPositionChange}
-        bin01={bin01}
-        bin02={bin02}
-        bin03={bin03}
-        bin04={bin04}
-        bin05={bin05}
-      />
-      <Divider weight="single" />
-      {/* <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" /> */}
-      <Footer hexMin={"0x" + fileRange.min} hexMax={"0x" + fileRange.max} />
-      <CompletionScreen open={progress === 1} />
-      <RetroMonitorScrim />
-      <Cursor x={cursor.x} y={cursor.y} />
+      {safariDetected ? (
+        <Fragment>
+          <MessageScreen
+            title="Safari not supported"
+            message="Please use Chrome, Firefox, Edge, or any other browser approved by Lumon IT."
+          />
+          <RetroMonitorScrim />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <Header filename={filename} progress={progress} />
+          <Divider weight="double" />
+          <DigitMatrix
+            squareRoot={20}
+            pan={pan}
+            zoom={zoom}
+            binPositions={binPositions}
+            bin01={bin01}
+            bin02={bin02}
+            bin03={bin03}
+            bin04={bin04}
+            bin05={bin05}
+            onBin={handleBin}
+          />
+          <Divider weight="double" />
+          <BinShelf
+            binMaxes={binMaxes}
+            binTotals={binTotals}
+            onBinPositionChange={handleBinPositionChange}
+            bin01={bin01}
+            bin02={bin02}
+            bin03={bin03}
+            bin04={bin04}
+            bin05={bin05}
+          />
+          <Divider weight="single" />
+          {/* <Footer hexMin="0x15DB4A" hexMax="0x0AEAFC" /> */}
+          <Footer hexMin={"0x" + fileRange.min} hexMax={"0x" + fileRange.max} />
+          <CompletionScreen open={progress === 1} />
+          <RetroMonitorScrim />
+          <Cursor x={cursor.x} y={cursor.y} />
+        </Fragment>
+      )}
     </div>
   );
 };
