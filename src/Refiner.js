@@ -136,6 +136,7 @@ const Refiner = () => {
             message="Please use Chrome, Firefox, Edge, or any other browser approved by Lumon IT."
           />
           <RetroMonitorScrim />
+          <Cursor x={cursor.x} y={cursor.y} />
         </Fragment>
       ) : (
         <Fragment>
